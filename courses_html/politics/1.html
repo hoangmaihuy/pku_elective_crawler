@@ -1,0 +1,3680 @@
+
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+<head>
+<title>课程查询</title>
+<link href="/elective2008/resources/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/elective2008/resources/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/elective2008/resources/js/selectize.js"></script>
+<script type="text/javascript">
+$(function() {
+	var $wrapper = $('#wrapper');
+	var theme_match = String(window.location).match(/[?&]theme=([a-z0-9]+)/);
+	var theme = (theme_match && theme_match[1]) || 'default';
+	var themes = ['default','legacy','bootstrap2','bootstrap3'];
+	$('head').append('<link rel="stylesheet" href="/elective2008/resources/css/selectize.' + theme + '.css">');
+
+	var $themes = $('<div>').addClass('theme-selector').insertAfter('h1');
+	for (var i = 0; i < themes.length; i++) {
+		$themes.append('<a href="?theme=' + themes[i] + '"' + (themes[i] === theme ? ' class="active"' : '') + '>' + themes[i] + '</a>');
+	}
+
+	// display scripts on the page
+	$('script', $wrapper).each(function() {
+		var code = this.text;
+		if (code && code.length) {
+			var lines = code.split('\n');
+			var indent = null;
+
+			for (var i = 0; i < lines.length; i++) {
+				if (/^[	 ]*$/.test(lines[i])) continue;
+				if (!indent) {
+					var lineindent = lines[i].match(/^([ 	]+)/);
+					if (!lineindent) break;
+					indent = lineindent[1];
+				}
+				lines[i] = lines[i].replace(new RegExp('^' + indent), '');
+			}
+
+			var code = $.trim(lines.join('\n')).replace(/	/g, '    ');
+			var $pre = $('<pre>').addClass('js').text(code);
+			$pre.insertAfter(this);
+		}
+	});
+
+	// show current input values
+	$('select.selectized,input.selectized', $wrapper).each(function() {
+		var $container = $('<div>').addClass('value').html('Current Value: ');
+		var $value = $('<span>').appendTo($container);
+		var $input = $(this);
+		var update = function(e) { $value.text(JSON.stringify($input.val())); }
+
+		$(this).on('change', update);
+		update();
+
+		$container.insertAfter($input);
+	});
+});
+var elerdm=false;
+if(true)elerdm=true;
+</script>
+
+</head>
+
+<body style="padding:0px 0px 0px 0px;margin:0px 0px 0px 0px">
+	
+
+
+
+
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.STYLE1 {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 14px;
+}
+-->
+</style>
+
+<table width="95%" height="125" cellpadding="0" cellspacing="0" align="center" style="table-layout:fixed;">
+	<tr>
+		<td height="125" valign="top" background="/elective2008/resources/images/w.png" style="background-repeat:no-repeat;background-size:cover;">
+		<table width="100%" height="73" cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td width="483" height="29">&nbsp;</td>
+				<td colspan="6">&nbsp;</td>
+			</tr>
+			<tr>
+				<td height="27">&nbsp;</td>
+				<td width="70" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/electivePlan/ElectivePlanController.jpf"
+					class="titlelink1">
+
+选课计划
+</a></span></td>
+				<td width="10" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="60" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/electiveWork/ElectiveWorkController.jpf"
+					class="titlelink1">预&nbsp;&nbsp;选</a></span></td>
+				<td width="11" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="70" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/electiveWork/showResults.do" class="titlelink1">选课结果</a></span></td>
+				<td width="12" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="70" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/supplement/SupplyCancel.do"
+					class="titlelink1">补退选</a></span></td>
+					
+				<td width="12" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="60" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/supplement/SupplyOnly.do"
+					class="titlelink1">补&nbsp;&nbsp;选</a></span></td>					
+					
+				<td width="10" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="60" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/help/HelpController.jpf" class="titlelink1">帮&nbsp;&nbsp;助</a></span></td>
+				<td width="10" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="60" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/logout.do" class="titlelink1">退&nbsp;&nbsp;出</a></span></td>
+			</tr>
+			<tr>
+				<td height="13" colspan="12">&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+	
+		
+			<table width="95%" border="0" cellspacing="0px" align="center">
+				<tr>
+					<td colspan="2" class='pkuportal-remark'>网上选课>> 选课计划 >> 添加选课计划课程： 【信息科学技术学院                                                                                    
+					枚辉煌，20-21学年第2学期 课程查询】</td>
+				</tr>
+				
+				<tr>
+					<td colspan="2">
+					<div style="width:52px;float:left"><img src="/elective2008/resources/images/attention.jpg" /></div>
+					<div style="float:left;padding:2px 0px 0px 1px;"> <a href='../electivePlan/ElectivePlanController.jpf'><b>查看选课计划</b></a>  </div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><form name="qyForm" id="qyForm" action="/elective2008/edu/pku/stu/elective/controller/courseQuery/getCurriculmByForm.do" method="post" onsubmit="return checkForm('true')">
+						<table border="0" style="width:100%">
+							<tr>
+								<td width="100%">
+								<table width="100%" style="table-layout:fixed;">
+									<tr>
+										<td width="60px" align="left">课程分类：</td>
+										<td width="100%" align="left">
+											
+												
+												
+													
+														
+															<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="education_plan_bk" value="education_plan_bk" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>培养方案</span>
+														
+													
+													<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="speciality" value="speciality" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>专业课</span>
+													
+														
+															<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="politics" value="politics" checked style="vertical-align:text-bottom;margin-bottom: 2px;"><span>政治课</span>
+															<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="english" value="english" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>英语课</span>
+															<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="gym" value="gym" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>体育课</span>
+														
+													
+													<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="trans_choice" value="trans_choice" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>通选课</span>
+													<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="pub_choice" value="pub_choice" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>公选课</span>
+													
+														
+															<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="liberal_computer" value="liberal_computer" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>计算机基础课</span>
+															
+																
+															
+														
+													
+												
+											
+										</td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+							<tr>
+								<td width="100%">
+								<table width="100%" style="table-layout:fixed;">
+									<tr valign="left">
+										<td width="60">课程号
+										<div style="font-size:15px;float:left;">*</div>
+										：</td>
+										<td width="15%" align="left"><input type="text" name="{actionForm.courseID}" id="courseID" class="selectize-input" value="" maxlength="10" style="width:80%"></td>
+										<td width="60">课程名
+										<div style="font-size:15px;float:left;">*</div>
+										：</td>
+										<td width="25%"><input type="text" name="{actionForm.courseName}" id="courseName" class="selectize-input" maxlength="20" style="width:80%"></td>
+										<td width="70">开课单位
+										<div style="font-size:15px;float:left;">*</div>
+										：</td>
+										<td width="30%"><input type="hidden" name="wlw-select_key:{actionForm.deptID}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.deptID}" id="deptID" style="width:80%">
+<option value="" style="width:80%">请选择</option>
+<option value="001" style="width:80%">数学科学学院</option>
+<option value="004" style="width:80%">物理学院</option>
+<option value="010" style="width:80%">化学与分子工程学院</option>
+<option value="011" style="width:80%">生命科学学院</option>
+<option value="012" style="width:80%">地球与空间科学学院</option>
+<option value="016" style="width:80%">心理与认知科学学院</option>
+<option value="017" style="width:80%">软件与微电子学院</option>
+<option value="018" style="width:80%">新闻与传播学院</option>
+<option value="020" style="width:80%">中国语言文学系</option>
+<option value="021" style="width:80%">历史学系</option>
+<option value="022" style="width:80%">考古文博学院</option>
+<option value="023" style="width:80%">哲学系（宗教学系）</option>
+<option value="024" style="width:80%">国际关系学院</option>
+<option value="025" style="width:80%">经济学院</option>
+<option value="028" style="width:80%">光华管理学院</option>
+<option value="029" style="width:80%">法学院</option>
+<option value="030" style="width:80%">信息管理系</option>
+<option value="031" style="width:80%">社会学系</option>
+<option value="032" style="width:80%">政府管理学院</option>
+<option value="038" style="width:80%">英语语言文学系</option>
+<option value="039" style="width:80%">外国语学院</option>
+<option value="040" style="width:80%">马克思主义学院</option>
+<option value="041" style="width:80%">体育教研部</option>
+<option value="043" style="width:80%">艺术学院</option>
+<option value="044" style="width:80%">对外汉语教育学院</option>
+<option value="046" style="width:80%">元培学院</option>
+<option value="047" style="width:80%">深圳研究生院</option>
+<option value="048" style="width:80%">信息科学技术学院</option>
+<option value="062" style="width:80%">国家发展研究院</option>
+<option value="067" style="width:80%">教育学院</option>
+<option value="068" style="width:80%">人口研究所</option>
+<option value="084" style="width:80%">前沿交叉学科研究院</option>
+<option value="086" style="width:80%">工学院</option>
+<option value="126" style="width:80%">城市与环境学院</option>
+<option value="127" style="width:80%">环境科学与工程学院</option>
+<option value="180" style="width:80%">医学部教学办</option>
+<option value="182" style="width:80%">分子医学研究所</option>
+<option value="192" style="width:80%">歌剧研究院</option>
+<option value="195" style="width:80%">建筑与景观设计学院</option>
+<option value="206" style="width:80%">新媒体研究院</option>
+<option value="208" style="width:80%">燕京学堂</option>
+<option value="211" style="width:80%">现代农学院（筹）</option>
+<option value="607" style="width:80%">武装部</option>
+<option value="610" style="width:80%">国际合作部</option>
+<option value="612" style="width:80%">教务部</option>
+<option value="614" style="width:80%">研究生院</option>
+<option value="671" style="width:80%">创新创业学院</option>
+<option value="ALL" selected style="width:80%">全部</option></select></td>
+										<td width="70">上课时间：</td>
+										<td width="30%">
+										<table width="90%" style="table-layout:fixed;">
+											<tr>
+												<td width="50%"><input type="hidden" name="wlw-select_key:{actionForm.courseDay}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.courseDay}" id="courseDay"><option value="" selected>请选择</option>
+													<option value="1">周一</option>
+													<option value="2">周二</option>
+													<option value="3">周三</option>
+													<option value="4">周四</option>
+													<option value="5">周五</option>
+													<option value="6">周六</option>
+													<option value="7">周日</option></select></td>
+												<td width="50%"><input type="hidden" name="wlw-select_key:{actionForm.courseTime}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.courseTime}" id="courseTime"><option value="" selected>请选择</option>
+													<option value="1">第01节</option>
+													<option value="2">第02节</option>
+													<option value="3">第03节</option>
+													<option value="4">第04节</option>
+													<option value="5">第05节</option>
+													<option value="6">第06节</option>
+													<option value="7">第07节</option>
+													<option value="8">第08节</option>
+													<option value="9">第09节</option>
+													<option value="10">第10节</option>
+													<option value="11">第11节</option>
+													<option value="12">第12节</option></select></td>
+												<td width="20"><input type="hidden" name="wlw-checkbox_key:{actionForm.queryDateFlag}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.queryDateFlag}"></td>
+												<td width="70">时间反查</td>
+											</tr>
+										</table>
+										</td>
+										<td width="70"><input type="button" id="b_query" class="selectize-input" value="查询" style="cursor:pointer;"></td>
+										<td width="70"><input type="button" id="b_cancel" class="selectize-input" value="清空条件" style="cursor:pointer;"></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						<input type="hidden" id='deptIdHide' name="deptIdHide" />
+					</form></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+<table class="datagrid" width="100%" style="table-layout:fixed;">
+
+						
+						
+
+
+						
+						
+						
+					
+						
+						
+<tr class="datagrid-header">
+							<th class="datagrid" style="width:100">课程号</th>
+
+
+							<th class="datagrid" style="width:25%">课程名</th>
+
+
+							
+								
+								
+								
+									<th class="datagrid" colspan="2" style="width:80">课程类别</th>
+
+
+								
+							
+							<th class="datagrid" style="width:30">学分</th>
+
+
+							<th class="datagrid" style="width:25%">教师</th>
+
+
+							<th class="datagrid" style="width:30">班号</th>
+
+
+							<th class="datagrid" style="width:10%">开课单位</th>
+
+
+							<th class="datagrid" style="width:7%">专业</th>
+
+
+							<th class="datagrid" style="width:30">年级</th>
+
+
+							<th class="datagrid" style="width:25%">上课时间及教室</th>
+
+
+							<th class="datagrid" style="width:8%">限数/已选</th>
+
+
+							<th class="datagrid" style="width:80">备注</th>
+
+
+							<th class="datagrid" style="width:100">加入可选列表</th>
+
+
+						
+</tr>
+
+
+						
+						
+						
+					
+						
+						
+
+
+						
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031761_10727" target="_blank"><span>04031761</span></a></td>
+
+							<td class="datagrid"><span>习近平新时代中国特色社会主义思想概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>杨柳新(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一1~2节 理教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=0&amp;cs_id=BZ2021204031761_10727" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031761_23938" target="_blank"><span>04031761</span></a></td>
+
+							<td class="datagrid"><span>习近平新时代中国特色社会主义思想概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>孙蚌珠(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一5~6节 理教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1&amp;cs_id=BZ2021204031761_23938" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031740_19147" target="_blank"><span>04031740</span></a></td>
+
+							<td class="datagrid"><span>马克思主义基本原理概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>李少军(教授),王在全(教授),宋朝龙(预聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一7~9节 理教201<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=2&amp;cs_id=BZ2021204031740_19147" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031740_21944" target="_blank"><span>04031740</span></a></td>
+
+							<td class="datagrid"><span>马克思主义基本原理概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>李旸(讲师),封世蓝(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一7~9节 理教203<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=3&amp;cs_id=BZ2021204031740_21944" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031731_19483" target="_blank"><span>04031731</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>聂志红(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一7~9节 理教202<br></span></td>
+
+							<td class="datagrid" align="center"><span>125 / 0</span></td>
+
+							<td class="datagrid"><span>2019级，2018级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=4&amp;cs_id=BZ2021204031731_19483" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031730_15611" target="_blank"><span>04031730</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>聂志红(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一7~9节<br></span></td>
+
+							<td class="datagrid" align="center"><span>35 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选，上课地点：理教202</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=5&amp;cs_id=BZ2021204031730_15611" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031650_12650" target="_blank"><span>04031650</span></a></td>
+
+							<td class="datagrid"><span>思想道德修养与法律基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>杨柳新(副教授),张会峰(副教授),宇文利(教授),秦维红(副教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一7~8节 理教106<br></span></td>
+
+							<td class="datagrid" align="center"><span>160 / 0</span></td>
+
+							<td class="datagrid"><span>2020级，2017级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=6&amp;cs_id=BZ2021204031650_12650" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660_12695" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>张永(副教授),王文章(教授),王久高(长聘副教授),王倩(助理教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一7~8节 理教103<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=7&amp;cs_id=BZ2021204031660_12695" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660_33192" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>冯雅新(副教授),康沛竹(教授),王久高(长聘副教授),王文章(教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>3</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一7~8节 理教303<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=8&amp;cs_id=BZ2021204031660_33192" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031740_35475" target="_blank"><span>04031740</span></a></td>
+
+							<td class="datagrid"><span>马克思主义基本原理概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>宋朝龙(预聘副教授),宋国兴(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>3</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一10~12节 理教203<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=9&amp;cs_id=BZ2021204031740_35475" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031731_23708" target="_blank"><span>04031731</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>黄俊立(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一10~12节 理教202<br></span></td>
+
+							<td class="datagrid" align="center"><span>120 / 0</span></td>
+
+							<td class="datagrid"><span>2019级，2018级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=10&amp;cs_id=BZ2021204031731_23708" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031730_25130" target="_blank"><span>04031730</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>黄俊立(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一10~12节<br></span></td>
+
+							<td class="datagrid" align="center"><span>40 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选，上课地点：理教202</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=11&amp;cs_id=BZ2021204031730_25130" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031731_98596" target="_blank"><span>04031731</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>贺大兴(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>9</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一10~12节 理教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>110 / 0</span></td>
+
+							<td class="datagrid"><span>2019级，2018级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=12&amp;cs_id=BZ2021204031731_98596" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031730_93459" target="_blank"><span>04031730</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>贺大兴(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>9</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一10~12节<br></span></td>
+
+							<td class="datagrid" align="center"><span>55 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选，上课地点：理教102</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=13&amp;cs_id=BZ2021204031730_93459" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031650_81682" target="_blank"><span>04031650</span></a></td>
+
+							<td class="datagrid"><span>思想道德修养与法律基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>户国栋(讲师)</span></td>
+
+							<td class="datagrid" align="center"><span>8</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一10~11节 理教106<br></span></td>
+
+							<td class="datagrid" align="center"><span>160 / 0</span></td>
+
+							<td class="datagrid"><span>2020级，2017级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=14&amp;cs_id=BZ2021204031650_81682" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660_22546" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>张永(副教授),王久高(长聘副教授),路宽(助理教授),史春风(副教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周一10~11节 理教103<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=15&amp;cs_id=BZ2021204031660_22546" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031761_34749" target="_blank"><span>04031761</span></a></td>
+
+							<td class="datagrid"><span>习近平新时代中国特色社会主义思想概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>冯雅新(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>3</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二1~2节 二教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=16&amp;cs_id=BZ2021204031761_34749" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031761_48948" target="_blank"><span>04031761</span></a></td>
+
+							<td class="datagrid"><span>习近平新时代中国特色社会主义思想概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>孙熙国(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>4</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二5~6节 理教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=17&amp;cs_id=BZ2021204031761_48948" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031740_45354" target="_blank"><span>04031740</span></a></td>
+
+							<td class="datagrid"><span>马克思主义基本原理概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>赵顺(讲师),李彬彬(预聘副教授),黄俊立(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>4</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二7~9节 理教203<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=18&amp;cs_id=BZ2021204031740_45354" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031731_34504" target="_blank"><span>04031731</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>程美东(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>3</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二7~9节 理教202<br></span></td>
+
+							<td class="datagrid" align="center"><span>110 / 0</span></td>
+
+							<td class="datagrid"><span>2019级，2018级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=19&amp;cs_id=BZ2021204031731_34504" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031730_34535" target="_blank"><span>04031730</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>程美东(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>3</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二7~9节<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选，上课地点：理教202</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=20&amp;cs_id=BZ2021204031730_34535" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031650_20637" target="_blank"><span>04031650</span></a></td>
+
+							<td class="datagrid"><span>思想道德修养与法律基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>杨柳新(副教授),秦维红(副教授),张会峰(副教授),李健(副教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二7~8节 理教106<br></span></td>
+
+							<td class="datagrid" align="center"><span>160 / 0</span></td>
+
+							<td class="datagrid"><span>2020级、2017级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=21&amp;cs_id=BZ2021204031650_20637" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660_47501" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>赵诺(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>4</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二7~8节 一教101<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=22&amp;cs_id=BZ2021204031660_47501" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660_66391" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>康沛竹(教授),史春风(副教授),冯雅新(副教授),王倩(助理教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>6</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二7~8节 理教103<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=23&amp;cs_id=BZ2021204031660_66391" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660_73415" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>王久高(长聘副教授),王文章(教授),王倩(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>7</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二7~8节 理教303<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=24&amp;cs_id=BZ2021204031660_73415" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031740_56609" target="_blank"><span>04031740</span></a></td>
+
+							<td class="datagrid"><span>马克思主义基本原理概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>刘军(教授),宋国兴(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>5</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二10~12节 理教203<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=25&amp;cs_id=BZ2021204031740_56609" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031731108857" target="_blank"><span>04031731</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>宋国兴(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>10</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二10~12节 理教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>110 / 0</span></td>
+
+							<td class="datagrid"><span>2019级，2018级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=26&amp;cs_id=BZ2021204031731108857" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031730105547" target="_blank"><span>04031730</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>宋国兴(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>10</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二10~12节<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选，上课地点：理教102</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=27&amp;cs_id=BZ2021204031730105547" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031650_35007" target="_blank"><span>04031650</span></a></td>
+
+							<td class="datagrid"><span>思想道德修养与法律基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>秦维红(副教授),张会峰(副教授),宇文利(教授),杨柳新(副教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>3</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二10~11节 理教106<br></span></td>
+
+							<td class="datagrid" align="center"><span>160 / 0</span></td>
+
+							<td class="datagrid"><span>2020级，2017级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=28&amp;cs_id=BZ2021204031650_35007" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660_57842" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>赵诺(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>5</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周二10~11节 理教103<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=29&amp;cs_id=BZ2021204031660_57842" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031761_56068" target="_blank"><span>04031761</span></a></td>
+
+							<td class="datagrid"><span>习近平新时代中国特色社会主义思想概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>刘军(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>5</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三1~2节 理教201<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=30&amp;cs_id=BZ2021204031761_56068" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031761_66666" target="_blank"><span>04031761</span></a></td>
+
+							<td class="datagrid"><span>习近平新时代中国特色社会主义思想概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>闫培宇(讲师)</span></td>
+
+							<td class="datagrid" align="center"><span>6</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三5~6节 理教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=31&amp;cs_id=BZ2021204031761_66666" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031750_11925" target="_blank"><span>04031750</span></a></td>
+
+							<td class="datagrid"><span>形势与政策</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>1.0</span></td>
+
+							<td class="datagrid" align="center"><span>王成英(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 单周周三5~6节 二教205<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=32&amp;cs_id=BZ2021204031750_11925" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031740_65232" target="_blank"><span>04031740</span></a></td>
+
+							<td class="datagrid"><span>马克思主义基本原理概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>白雪秋(教授),孙来斌(教授),聂志红(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>6</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三7~9节 理教203<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=33&amp;cs_id=BZ2021204031740_65232" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031650_47711" target="_blank"><span>04031650</span></a></td>
+
+							<td class="datagrid"><span>思想道德修养与法律基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>张会峰(副教授),李健(副教授),宇文利(教授),秦维红(副教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>4</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三7~8节 理教106<br></span></td>
+
+							<td class="datagrid" align="center"><span>160 / 0</span></td>
+
+							<td class="datagrid"><span>2020级，2017级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=34&amp;cs_id=BZ2021204031650_47711" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031750_26265" target="_blank"><span>04031750</span></a></td>
+
+							<td class="datagrid"><span>形势与政策</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>1.0</span></td>
+
+							<td class="datagrid" align="center"><span>王成英(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 单周周三7~8节 二教205<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=35&amp;cs_id=BZ2021204031750_26265" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660_87616" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>史春风(副教授),王久高(长聘副教授),林绪武(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>8</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三7~8节 理教303<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=36&amp;cs_id=BZ2021204031660_87616" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660_90783" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>刘庆霖(助理教授),康沛竹(教授),林绪武(教授),王文章(教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>9</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三7~8节 理教103<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=37&amp;cs_id=BZ2021204031660_90783" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031740_74097" target="_blank"><span>04031740</span></a></td>
+
+							<td class="datagrid"><span>马克思主义基本原理概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>林锋(教授),贺大兴(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>7</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三10~12节 理教203<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=38&amp;cs_id=BZ2021204031740_74097" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031731119243" target="_blank"><span>04031731</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>赵顺(讲师)</span></td>
+
+							<td class="datagrid" align="center"><span>11</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三10~12节 理教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>125 / 0</span></td>
+
+							<td class="datagrid"><span>2019级，2018级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=39&amp;cs_id=BZ2021204031731119243" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031730110400" target="_blank"><span>04031730</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>赵顺(讲师)</span></td>
+
+							<td class="datagrid" align="center"><span>11</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三10~12节<br></span></td>
+
+							<td class="datagrid" align="center"><span>35 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选，上课地点：理教102</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=40&amp;cs_id=BZ2021204031730110400" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031731_62110" target="_blank"><span>04031731</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>黄俊立(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>6</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三10~12节 理教202<br></span></td>
+
+							<td class="datagrid" align="center"><span>125 / 0</span></td>
+
+							<td class="datagrid"><span>2019级，2018级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=41&amp;cs_id=BZ2021204031731_62110" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031730_64325" target="_blank"><span>04031730</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>黄俊立(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>6</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三10~12节<br></span></td>
+
+							<td class="datagrid" align="center"><span>35 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选，上课地点：理教202</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=42&amp;cs_id=BZ2021204031730_64325" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031650_92683" target="_blank"><span>04031650</span></a></td>
+
+							<td class="datagrid"><span>思想道德修养与法律基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>王逸鸣(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>9</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三10~11节 理教106<br></span></td>
+
+							<td class="datagrid" align="center"><span>160 / 0</span></td>
+
+							<td class="datagrid"><span>2020级，2017级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=43&amp;cs_id=BZ2021204031650_92683" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660103506" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>刘庆霖(助理教授),路宽(助理教授),冯雅新(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>10</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周三10~11节 理教103<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=44&amp;cs_id=BZ2021204031660103506" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031761_87779" target="_blank"><span>04031761</span></a></td>
+
+							<td class="datagrid"><span>习近平新时代中国特色社会主义思想概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>贺大兴(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>8</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 理教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=45&amp;cs_id=BZ2021204031761_87779" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031740_87639" target="_blank"><span>04031740</span></a></td>
+
+							<td class="datagrid"><span>马克思主义基本原理概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>孙熙国(教授),聂志红(副教授),白雪秋(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>8</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 理教203<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=46&amp;cs_id=BZ2021204031740_87639" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031731_75689" target="_blank"><span>04031731</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>封世蓝(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>7</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 理教202<br></span></td>
+
+							<td class="datagrid" align="center"><span>125 / 0</span></td>
+
+							<td class="datagrid"><span>2019级，2018级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=47&amp;cs_id=BZ2021204031731_75689" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031730_79840" target="_blank"><span>04031730</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>封世蓝(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>7</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节<br></span></td>
+
+							<td class="datagrid" align="center"><span>35 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选，上课地点：理教202</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=48&amp;cs_id=BZ2021204031730_79840" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031650_52803" target="_blank"><span>04031650</span></a></td>
+
+							<td class="datagrid"><span>思想道德修养与法律基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>李健(副教授),张会峰(副教授),安雅琴(讲师),杨柳新(副教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>5</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 理教106<br></span></td>
+
+							<td class="datagrid" align="center"><span>160 / 0</span></td>
+
+							<td class="datagrid"><span>2020级，2017级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=49&amp;cs_id=BZ2021204031650_52803" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660112277" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>路宽(助理教授),史春风(副教授),赵诺(助理教授),康沛竹(教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>11</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 理教103<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=50&amp;cs_id=BZ2021204031660112277" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031661139696" target="_blank"><span>04031661</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>裴植(助理教授),王文章(教授),周良书(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>13</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 理教303<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span>仅限18.19级学生选课</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=51&amp;cs_id=BZ2021204031661139696" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031740_95329" target="_blank"><span>04031740</span></a></td>
+
+							<td class="datagrid"><span>马克思主义基本原理概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>魏波(教授),赵顺(讲师),黄俊立(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>9</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四10~12节 理教203<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=52&amp;cs_id=BZ2021204031740_95329" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031731124928" target="_blank"><span>04031731</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>陈培永(预聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>12</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四10~12节 理教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>120 / 0</span></td>
+
+							<td class="datagrid"><span>2019级，2018级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=53&amp;cs_id=BZ2021204031731124928" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031730120277" target="_blank"><span>04031730</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>陈培永(预聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>12</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四10~12节<br></span></td>
+
+							<td class="datagrid" align="center"><span>40 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选，上课地点：理教102</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=54&amp;cs_id=BZ2021204031730120277" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031731_89746" target="_blank"><span>04031731</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>赵顺(讲师)</span></td>
+
+							<td class="datagrid" align="center"><span>8</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四10~12节 理教202<br></span></td>
+
+							<td class="datagrid" align="center"><span>110 / 0</span></td>
+
+							<td class="datagrid"><span>2019级，2018级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=55&amp;cs_id=BZ2021204031731_89746" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031730_84266" target="_blank"><span>04031730</span></a></td>
+
+							<td class="datagrid"><span>毛泽东思想和中国特色社会主义理论体系概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>赵顺(讲师)</span></td>
+
+							<td class="datagrid" align="center"><span>8</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四10~12节<br></span></td>
+
+							<td class="datagrid" align="center"><span>35 / 0</span></td>
+
+							<td class="datagrid"><span>2017级可选，上课地点：理教202</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=56&amp;cs_id=BZ2021204031730_84266" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031650_67733" target="_blank"><span>04031650</span></a></td>
+
+							<td class="datagrid"><span>思想道德修养与法律基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>张会峰(副教授),宇文利(教授),秦维红(副教授),杨柳新(副教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>6</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四10~11节 理教106<br></span></td>
+
+							<td class="datagrid" align="center"><span>160 / 0</span></td>
+
+							<td class="datagrid"><span>2020级、2017级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=57&amp;cs_id=BZ2021204031650_67733" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031660120220" target="_blank"><span>04031660</span></a></td>
+
+							<td class="datagrid"><span>中国近现代史纲要</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>路宽(助理教授),林绪武(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>12</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四10~11节 理教103<br></span></td>
+
+							<td class="datagrid" align="center"><span>165 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=58&amp;cs_id=BZ2021204031660120220" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031761_97806" target="_blank"><span>04031761</span></a></td>
+
+							<td class="datagrid"><span>习近平新时代中国特色社会主义思想概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>陈培永(预聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>9</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周五1~2节 二教107<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=59&amp;cs_id=BZ2021204031761_97806" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031761100618" target="_blank"><span>04031761</span></a></td>
+
+							<td class="datagrid"><span>习近平新时代中国特色社会主义思想概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>宋国兴(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>10</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周五5~6节 理教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>170 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=60&amp;cs_id=BZ2021204031761100618" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031651_76988" target="_blank"><span>04031651</span></a></td>
+
+							<td class="datagrid"><span>思想道德修养与法律基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>宇文利(教授),张会峰(副教授),杨柳新(副教授),秦维红(副教授)等</span></td>
+
+							<td class="datagrid" align="center"><span>7</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周五7~9节 理教106<br></span></td>
+
+							<td class="datagrid" align="center"><span>160 / 0</span></td>
+
+							<td class="datagrid"><span>2019级，2018级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=61&amp;cs_id=BZ2021204031651_76988" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204031761128785" target="_blank"><span>04031761</span></a></td>
+
+							<td class="datagrid"><span>习近平新时代中国特色社会主义思想概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>全校必修</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>刘东奇(助教),陈宝剑(教授),裴植(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>12</span></td>
+
+							<td class="datagrid"><span>马克思主义学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周五7~8节 二教415<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=62&amp;cs_id=BZ2021204031761128785" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+						
+						
+					
+						
+						
+
+
+						
+						
+<tr class="datagrid-footer">
+							<tr>
+								<td colspan="14" align="right">每页100条 Page 1 of 1&nbsp;&nbsp;First&nbsp;/&nbsp;Previous&nbsp;&nbsp;&nbsp;Next&nbsp;/&nbsp;Last&nbsp;&nbsp; 
+									<form name="pageForm" action="queryCurriculum.jsp" style="margin:0px; display:inline">跳转到: <script
+										type="text/javascript">
+				                    function doPagerSubmit(comp)
+				                    {
+				                      var form = document.forms["pageForm"];
+				                      form.method="GET";
+				                      form.submit();
+				                    }
+		                		</script> <select name="netui_row"
+										onchange="doPagerSubmit(this);return true;">
+										
+											
+												
+													<option value="syllabusListGrid;0" selected="true">1</option>
+												
+												
+											
+										
+									</select>
+								</td>
+
+							</tr>
+						
+</tr>
+						
+					</table>
+
+</td>
+				</tr>
+			</table>
+		
+
+
+		
+	
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_tagIdNameMap table to map the tagId attributes
+// to the real name written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.gym="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.education_plan_bk="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.courseName="{actionForm.courseName}"
+netui_tagIdNameMap.qyForm="qyForm"
+netui_tagIdNameMap.speciality="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.trans_choice="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.english="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.pub_choice="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.courseID="{actionForm.courseID}"
+netui_tagIdNameMap.courseDay="wlw-select_key:{actionForm.courseDay}"
+netui_tagIdNameMap.deptID="wlw-select_key:{actionForm.deptID}"
+netui_tagIdNameMap.politics="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.liberal_computer="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.courseTime="wlw-select_key:{actionForm.courseTime}"
+
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script></body>
+
+</html>
+<script language="JavaScript1.1" src="/elective2008/resources/js/ele.js"></script>
+<script language="JavaScript1.1" src="/elective2008/resources/js/courseQuery.js"></script>
+<script language="JavaScript1.1"><!--
+
+$('#deptID').selectize({
+	create: false,
+	sortField: {
+		field: 'value',
+		direction: 'asc'
+	}
+});
+$('#courseDay').selectize({
+	create: false,
+	sortField: {
+		field: 'value',
+		direction: 'asc'
+	}
+});
+$('#courseTime').selectize({
+	create: false,
+	sortField: {
+		field: 'text',
+		direction: 'asc'
+	}
+});
+
+var chgConExpDep=function(){
+    	$("#courseID").val('');
+    	$("#courseName").val('');
+    	$("#courseTime")[0].selectize.setValue('');
+    	$("#courseDay")[0].selectize.setValue('');
+	}
+$('#b_cancel').on('click',function(){
+		chgConExpDep();
+	})
+	
+if(true){
+	$('#b_query').on('click',function(){
+		if($('input:radio:checked').val()==null)alert("必须选择一项课程分类");
+		else $('#qyForm').submit();
+	})
+     
+	$('#education_plan_bk').on('click',function(){
+		$("#deptID")[0].selectize.setValue("048");
+		$('#deptID')[0].selectize.lock();
+	})
+	$('#speciality').on('click',function(){
+	    if(true && true){
+	   		 $('#deptID')[0].selectize.unlock();
+	    }else{
+			if(!false){//除元培学院学生之外，其他学生都只能查询、查看本院系课程
+			   if('080701'=='060131' ||'080701'=='060132'){
+				$('#deptID')[0].selectize.clearOptions();
+				$('#deptID')[0].selectize.addOption(new Option("外国语学院","039"));
+				$('#deptID')[0].selectize.addOption(new Option("历史学系","021"));
+				$("#deptID")[0].selectize.setValue("048");
+	   			$('#deptID')[0].selectize.unlock();
+			  }else{
+				$("#deptID")[0].selectize.setValue("048");
+	   			$('#deptID')[0].selectize.lock();
+			  }
+			}else{
+			 	if($('#deptID').val()=='')$("#deptID")[0].selectize.setValue("048");
+	   			$('#deptID')[0].selectize.unlock();
+			}
+		}
+	})
+	$('#politics,#english,#gym,#liberal_computer,#pt').on('click',function(){
+	   	$("#deptID")[0].selectize.setValue('');
+	   	$('#deptID')[0].selectize.lock();
+	})
+	$('#trans_choice,#pub_choice').on('click',function(){
+		if(false){
+			$("#deptID")[0].selectize.setValue("048");
+			$('#deptID')[0].selectize.lock();
+		}else{
+			if($('#deptID').val()=='')$("#deptID")[0].selectize.setValue("048");
+		   	$('#deptID')[0].selectize.unlock();
+	   	}
+	})
+	$('input:radio').on('change',function(){
+		chgConExpDep();
+	})
+	if(false){
+		$('#speciality').click();
+	}
+	if($('input:radio:checked').val()!=null){
+		$('input:radio:checked').click();
+
+	}
+	
+}
+
+--></script>

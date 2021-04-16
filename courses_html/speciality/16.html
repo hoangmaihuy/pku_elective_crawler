@@ -1,0 +1,5626 @@
+
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+<head>
+<title>课程查询</title>
+<link href="/elective2008/resources/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/elective2008/resources/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/elective2008/resources/js/selectize.js"></script>
+<script type="text/javascript">
+$(function() {
+	var $wrapper = $('#wrapper');
+	var theme_match = String(window.location).match(/[?&]theme=([a-z0-9]+)/);
+	var theme = (theme_match && theme_match[1]) || 'default';
+	var themes = ['default','legacy','bootstrap2','bootstrap3'];
+	$('head').append('<link rel="stylesheet" href="/elective2008/resources/css/selectize.' + theme + '.css">');
+
+	var $themes = $('<div>').addClass('theme-selector').insertAfter('h1');
+	for (var i = 0; i < themes.length; i++) {
+		$themes.append('<a href="?theme=' + themes[i] + '"' + (themes[i] === theme ? ' class="active"' : '') + '>' + themes[i] + '</a>');
+	}
+
+	// display scripts on the page
+	$('script', $wrapper).each(function() {
+		var code = this.text;
+		if (code && code.length) {
+			var lines = code.split('\n');
+			var indent = null;
+
+			for (var i = 0; i < lines.length; i++) {
+				if (/^[	 ]*$/.test(lines[i])) continue;
+				if (!indent) {
+					var lineindent = lines[i].match(/^([ 	]+)/);
+					if (!lineindent) break;
+					indent = lineindent[1];
+				}
+				lines[i] = lines[i].replace(new RegExp('^' + indent), '');
+			}
+
+			var code = $.trim(lines.join('\n')).replace(/	/g, '    ');
+			var $pre = $('<pre>').addClass('js').text(code);
+			$pre.insertAfter(this);
+		}
+	});
+
+	// show current input values
+	$('select.selectized,input.selectized', $wrapper).each(function() {
+		var $container = $('<div>').addClass('value').html('Current Value: ');
+		var $value = $('<span>').appendTo($container);
+		var $input = $(this);
+		var update = function(e) { $value.text(JSON.stringify($input.val())); }
+
+		$(this).on('change', update);
+		update();
+
+		$container.insertAfter($input);
+	});
+});
+var elerdm=false;
+if(true)elerdm=true;
+</script>
+
+</head>
+
+<body style="padding:0px 0px 0px 0px;margin:0px 0px 0px 0px">
+	
+
+
+
+
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.STYLE1 {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 14px;
+}
+-->
+</style>
+
+<table width="95%" height="125" cellpadding="0" cellspacing="0" align="center" style="table-layout:fixed;">
+	<tr>
+		<td height="125" valign="top" background="/elective2008/resources/images/w.png" style="background-repeat:no-repeat;background-size:cover;">
+		<table width="100%" height="73" cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td width="483" height="29">&nbsp;</td>
+				<td colspan="6">&nbsp;</td>
+			</tr>
+			<tr>
+				<td height="27">&nbsp;</td>
+				<td width="70" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/electivePlan/ElectivePlanController.jpf"
+					class="titlelink1">
+
+选课计划
+</a></span></td>
+				<td width="10" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="60" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/electiveWork/ElectiveWorkController.jpf"
+					class="titlelink1">预&nbsp;&nbsp;选</a></span></td>
+				<td width="11" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="70" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/electiveWork/showResults.do" class="titlelink1">选课结果</a></span></td>
+				<td width="12" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="70" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/supplement/SupplyCancel.do"
+					class="titlelink1">补退选</a></span></td>
+					
+				<td width="12" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="60" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/supplement/SupplyOnly.do"
+					class="titlelink1">补&nbsp;&nbsp;选</a></span></td>					
+					
+				<td width="10" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="60" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/edu/pku/stu/elective/controller/help/HelpController.jpf" class="titlelink1">帮&nbsp;&nbsp;助</a></span></td>
+				<td width="10" background="/elective2008/resources/images/w_5.gif"><img
+					src="/elective2008/resources/images/w_4.gif" width="5" height="27" /></td>
+				<td width="60" height="27" align="center" valign="middle"
+					background="/elective2008/resources/images/w_5.gif"><span class="STYLE1"><a
+					href="/elective2008/logout.do" class="titlelink1">退&nbsp;&nbsp;出</a></span></td>
+			</tr>
+			<tr>
+				<td height="13" colspan="12">&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+	
+		
+			<table width="95%" border="0" cellspacing="0px" align="center">
+				<tr>
+					<td colspan="2" class='pkuportal-remark'>网上选课>> 选课计划 >> 添加选课计划课程： 【信息科学技术学院                                                                                    
+					枚辉煌，20-21学年第2学期 课程查询】</td>
+				</tr>
+				
+				<tr>
+					<td colspan="2">
+					<div style="width:52px;float:left"><img src="/elective2008/resources/images/attention.jpg" /></div>
+					<div style="float:left;padding:2px 0px 0px 1px;"> <a href='../electivePlan/ElectivePlanController.jpf'><b>查看选课计划</b></a>  </div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><form name="qyForm" id="qyForm" action="/elective2008/edu/pku/stu/elective/controller/courseQuery/getCurriculmByForm.do" method="post" onsubmit="return checkForm('true')">
+						<table border="0" style="width:100%">
+							<tr>
+								<td width="100%">
+								<table width="100%" style="table-layout:fixed;">
+									<tr>
+										<td width="60px" align="left">课程分类：</td>
+										<td width="100%" align="left">
+											
+												
+												
+													
+														
+															<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="education_plan_bk" value="education_plan_bk" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>培养方案</span>
+														
+													
+													<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="speciality" value="speciality" checked style="vertical-align:text-bottom;margin-bottom: 2px;"><span>专业课</span>
+													
+														
+															<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="politics" value="politics" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>政治课</span>
+															<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="english" value="english" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>英语课</span>
+															<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="gym" value="gym" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>体育课</span>
+														
+													
+													<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="trans_choice" value="trans_choice" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>通选课</span>
+													<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="pub_choice" value="pub_choice" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>公选课</span>
+													
+														
+															<input type="radio" name="wlw-radio_button_group_key:{actionForm.courseSettingType}" id="liberal_computer" value="liberal_computer" style="vertical-align:text-bottom;margin-bottom: 2px;"><span>计算机基础课</span>
+															
+																
+															
+														
+													
+												
+											
+										</td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+							<tr>
+								<td width="100%">
+								<table width="100%" style="table-layout:fixed;">
+									<tr valign="left">
+										<td width="60">课程号
+										<div style="font-size:15px;float:left;">*</div>
+										：</td>
+										<td width="15%" align="left"><input type="text" name="{actionForm.courseID}" id="courseID" class="selectize-input" value="" maxlength="10" style="width:80%"></td>
+										<td width="60">课程名
+										<div style="font-size:15px;float:left;">*</div>
+										：</td>
+										<td width="25%"><input type="text" name="{actionForm.courseName}" id="courseName" class="selectize-input" maxlength="20" style="width:80%"></td>
+										<td width="70">开课单位
+										<div style="font-size:15px;float:left;">*</div>
+										：</td>
+										<td width="30%"><input type="hidden" name="wlw-select_key:{actionForm.deptID}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.deptID}" id="deptID" style="width:80%">
+<option value="" style="width:80%">请选择</option>
+<option value="001" style="width:80%">数学科学学院</option>
+<option value="004" style="width:80%">物理学院</option>
+<option value="010" style="width:80%">化学与分子工程学院</option>
+<option value="011" style="width:80%">生命科学学院</option>
+<option value="012" style="width:80%">地球与空间科学学院</option>
+<option value="016" style="width:80%">心理与认知科学学院</option>
+<option value="017" style="width:80%">软件与微电子学院</option>
+<option value="018" style="width:80%">新闻与传播学院</option>
+<option value="020" style="width:80%">中国语言文学系</option>
+<option value="021" style="width:80%">历史学系</option>
+<option value="022" style="width:80%">考古文博学院</option>
+<option value="023" style="width:80%">哲学系（宗教学系）</option>
+<option value="024" style="width:80%">国际关系学院</option>
+<option value="025" style="width:80%">经济学院</option>
+<option value="028" style="width:80%">光华管理学院</option>
+<option value="029" style="width:80%">法学院</option>
+<option value="030" style="width:80%">信息管理系</option>
+<option value="031" style="width:80%">社会学系</option>
+<option value="032" style="width:80%">政府管理学院</option>
+<option value="038" style="width:80%">英语语言文学系</option>
+<option value="039" style="width:80%">外国语学院</option>
+<option value="040" style="width:80%">马克思主义学院</option>
+<option value="041" style="width:80%">体育教研部</option>
+<option value="043" style="width:80%">艺术学院</option>
+<option value="044" style="width:80%">对外汉语教育学院</option>
+<option value="046" style="width:80%">元培学院</option>
+<option value="047" style="width:80%">深圳研究生院</option>
+<option value="048" style="width:80%">信息科学技术学院</option>
+<option value="062" style="width:80%">国家发展研究院</option>
+<option value="067" style="width:80%">教育学院</option>
+<option value="068" style="width:80%">人口研究所</option>
+<option value="084" style="width:80%">前沿交叉学科研究院</option>
+<option value="086" style="width:80%">工学院</option>
+<option value="126" style="width:80%">城市与环境学院</option>
+<option value="127" style="width:80%">环境科学与工程学院</option>
+<option value="180" style="width:80%">医学部教学办</option>
+<option value="182" style="width:80%">分子医学研究所</option>
+<option value="192" style="width:80%">歌剧研究院</option>
+<option value="195" style="width:80%">建筑与景观设计学院</option>
+<option value="206" style="width:80%">新媒体研究院</option>
+<option value="208" style="width:80%">燕京学堂</option>
+<option value="211" style="width:80%">现代农学院（筹）</option>
+<option value="607" style="width:80%">武装部</option>
+<option value="610" style="width:80%">国际合作部</option>
+<option value="612" style="width:80%">教务部</option>
+<option value="614" style="width:80%">研究生院</option>
+<option value="671" style="width:80%">创新创业学院</option>
+<option value="ALL" selected style="width:80%">全部</option></select></td>
+										<td width="70">上课时间：</td>
+										<td width="30%">
+										<table width="90%" style="table-layout:fixed;">
+											<tr>
+												<td width="50%"><input type="hidden" name="wlw-select_key:{actionForm.courseDay}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.courseDay}" id="courseDay"><option value="" selected>请选择</option>
+													<option value="1">周一</option>
+													<option value="2">周二</option>
+													<option value="3">周三</option>
+													<option value="4">周四</option>
+													<option value="5">周五</option>
+													<option value="6">周六</option>
+													<option value="7">周日</option></select></td>
+												<td width="50%"><input type="hidden" name="wlw-select_key:{actionForm.courseTime}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.courseTime}" id="courseTime"><option value="" selected>请选择</option>
+													<option value="1">第01节</option>
+													<option value="2">第02节</option>
+													<option value="3">第03节</option>
+													<option value="4">第04节</option>
+													<option value="5">第05节</option>
+													<option value="6">第06节</option>
+													<option value="7">第07节</option>
+													<option value="8">第08节</option>
+													<option value="9">第09节</option>
+													<option value="10">第10节</option>
+													<option value="11">第11节</option>
+													<option value="12">第12节</option></select></td>
+												<td width="20"><input type="hidden" name="wlw-checkbox_key:{actionForm.queryDateFlag}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.queryDateFlag}"></td>
+												<td width="70">时间反查</td>
+											</tr>
+										</table>
+										</td>
+										<td width="70"><input type="button" id="b_query" class="selectize-input" value="查询" style="cursor:pointer;"></td>
+										<td width="70"><input type="button" id="b_cancel" class="selectize-input" value="清空条件" style="cursor:pointer;"></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						<input type="hidden" id='deptIdHide' name="deptIdHide" />
+					</form></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+<table class="datagrid" width="100%" style="table-layout:fixed;">
+
+						
+						
+
+
+						
+						
+						
+					
+						
+						
+<tr class="datagrid-header">
+							<th class="datagrid" style="width:100">课程号</th>
+
+
+							<th class="datagrid" style="width:25%">课程名</th>
+
+
+							
+								
+								
+								
+									<th class="datagrid" colspan="2" style="width:80">课程类别</th>
+
+
+								
+							
+							<th class="datagrid" style="width:30">学分</th>
+
+
+							<th class="datagrid" style="width:25%">教师</th>
+
+
+							<th class="datagrid" style="width:30">班号</th>
+
+
+							<th class="datagrid" style="width:10%">开课单位</th>
+
+
+							<th class="datagrid" style="width:7%">专业</th>
+
+
+							<th class="datagrid" style="width:30">年级</th>
+
+
+							<th class="datagrid" style="width:25%">上课时间及教室</th>
+
+
+							<th class="datagrid" style="width:8%">限数/已选</th>
+
+
+							<th class="datagrid" style="width:80">备注</th>
+
+
+							<th class="datagrid" style="width:100">加入可选列表</th>
+
+
+						
+</tr>
+
+
+						
+						
+						
+					
+						
+						
+
+
+						
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201603333_19834" target="_blank"><span>01603333</span></a></td>
+
+							<td class="datagrid"><span>实验心理学实验</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>耿海燕(教学教授),张俊云(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>心理与认知科学学院</span></td>
+
+							<td class="datagrid"><span>心理学</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>20 / 0</span></td>
+
+							<td class="datagrid"><span>先修普心、心统，13:30王克桢1113</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1500&amp;cs_id=BZ2021201603333_19834" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200405607_10232" target="_blank"><span>00405607</span></a></td>
+
+							<td class="datagrid"><span>实用低温物理与技术入门</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>林熙(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>物理学院</span></td>
+
+							<td class="datagrid"><span>物理学</span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 三教106<br></span></td>
+
+							<td class="datagrid" align="center"><span>30 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1501&amp;cs_id=BZ2021200405607_10232" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203533940_19967" target="_blank"><span>03533940</span></a></td>
+
+							<td class="datagrid"><span>泰国民俗学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>金勇(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>泰语</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 地学210<br></span></td>
+
+							<td class="datagrid" align="center"><span>12 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1502&amp;cs_id=BZ2021203533940_19967" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200539410_11668" target="_blank"><span>00539410</span></a></td>
+
+							<td class="datagrid"><span>太空探索</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>陈鸿飞(教授),谢伦(副教授),周煦之(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>地球与空间科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 二教109<br></span></td>
+
+							<td class="datagrid" align="center"><span>201 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1503&amp;cs_id=BZ2021200539410_11668" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200102441_13444" target="_blank"><span>00102441</span></a></td>
+
+							<td class="datagrid"><span>统计和生物统计中的因果推断</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>ZHOU XIAOHUA(周晓华)(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>数学科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 <br>1~15周 双周周二3~4节<br></span></td>
+
+							<td class="datagrid" align="center"><span>30 / 0</span></td>
+
+							<td class="datagrid"><span>研本 三教105</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1504&amp;cs_id=BZ2021200102441_13444" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202530061_15752" target="_blank"><span>02530061</span></a></td>
+
+							<td class="datagrid"><span>微观经济学“习题课”</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>石凡奇(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>经济学院</span></td>
+
+							<td class="datagrid"><span>经济学类</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 双周周四5~6节 三教301<br></span></td>
+
+							<td class="datagrid" align="center"><span>80 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1505&amp;cs_id=BZ2021202530061_15752" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203537232_15434" target="_blank"><span>03537232</span></a></td>
+
+							<td class="datagrid"><span>乌尔都语高级口译教程（下）</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>张亚冰(讲师)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>乌尔都语</span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 地学313<br></span></td>
+
+							<td class="datagrid" align="center"><span>10 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1506&amp;cs_id=BZ2021203537232_15434" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204832500_18114" target="_blank"><span>04832500</span></a></td>
+
+							<td class="datagrid"><span>无线通信集成电路基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>叶乐(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>信息科学技术学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 地学202<br></span></td>
+
+							<td class="datagrid" align="center"><span>30 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1507&amp;cs_id=BZ2021204832500_18114" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203633610_17848" target="_blank"><span>03633610</span></a></td>
+
+							<td class="datagrid"><span>西班牙语电影研究</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>路燕萍(讲师)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>西班牙语</span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 文史107<br></span></td>
+
+							<td class="datagrid" align="center"><span>25 / 0</span></td>
+
+							<td class="datagrid"><span>18级可选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1508&amp;cs_id=BZ2021203633610_17848" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200102924_15247" target="_blank"><span>00102924</span></a></td>
+
+							<td class="datagrid"><span>纤维丛与示性类</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>谢羿(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>数学科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 <br>1~15周 单周周二7~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>20 / 0</span></td>
+
+							<td class="datagrid"><span>研本 三教504</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1509&amp;cs_id=BZ2021200102924_15247" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200432265_19695" target="_blank"><span>00432265</span></a></td>
+
+							<td class="datagrid"><span>现代天文学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>王科(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>物理学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 理教103<br></span></td>
+
+							<td class="datagrid" align="center"><span>150 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1510&amp;cs_id=BZ2021200432265_19695" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200432224_11578" target="_blank"><span>00432224</span></a></td>
+
+							<td class="datagrid"><span>现代物理前沿讲座（Ⅱ）</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>肖云峰(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>物理学院</span></td>
+
+							<td class="datagrid"><span>物理学类</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 二教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>222 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1511&amp;cs_id=BZ2021200432224_11578" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204832880_13154" target="_blank"><span>04832880</span></a></td>
+
+							<td class="datagrid"><span>信息论与编码理论基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>马猛(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>信息科学技术学院</span></td>
+
+							<td class="datagrid"><span>电子信息科学与技术</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 理教204<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1512&amp;cs_id=BZ2021204832880_13154" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203033660_14933" target="_blank"><span>03033660</span></a></td>
+
+							<td class="datagrid"><span>信息组织小班讨论课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>张鹏翼(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>信息管理系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 双周周四5~6节 文史216<br></span></td>
+
+							<td class="datagrid" align="center"><span>15 / 0</span></td>
+
+							<td class="datagrid"><span>该课程为大班授课小班讨论形式。选此课必须同时选择信息组织大班课，否则期末成绩以0分记。</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1513&amp;cs_id=BZ2021203033660_14933" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203033660_24368" target="_blank"><span>03033660</span></a></td>
+
+							<td class="datagrid"><span>信息组织小班讨论课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>张鹏翼(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>信息管理系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 双周周四5~6节 文史203<br></span></td>
+
+							<td class="datagrid" align="center"><span>15 / 0</span></td>
+
+							<td class="datagrid"><span>该课程为大班授课小班讨论形式。选此课必须同时选择信息组织大班课，否则期末成绩以0分记。</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1514&amp;cs_id=BZ2021203033660_24368" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203033660_30809" target="_blank"><span>03033660</span></a></td>
+
+							<td class="datagrid"><span>信息组织小班讨论课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>张鹏翼(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>3</span></td>
+
+							<td class="datagrid"><span>信息管理系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 双周周四5~6节 文史110<br></span></td>
+
+							<td class="datagrid" align="center"><span>14 / 0</span></td>
+
+							<td class="datagrid"><span>该课程为大班授课小班讨论形式。选此课必须同时选择信息组织大班课，否则期末成绩以0分记。</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1515&amp;cs_id=BZ2021203033660_30809" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203033660_46192" target="_blank"><span>03033660</span></a></td>
+
+							<td class="datagrid"><span>信息组织小班讨论课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>张鹏翼(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>4</span></td>
+
+							<td class="datagrid"><span>信息管理系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 双周周四5~6节 文史113<br></span></td>
+
+							<td class="datagrid" align="center"><span>14 / 0</span></td>
+
+							<td class="datagrid"><span>该课程为大班授课小班讨论形式。选此课必须同时选择信息组织大班课，否则期末成绩以0分记。</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1516&amp;cs_id=BZ2021203033660_46192" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203033660_52165" target="_blank"><span>03033660</span></a></td>
+
+							<td class="datagrid"><span>信息组织小班讨论课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>张鹏翼(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>5</span></td>
+
+							<td class="datagrid"><span>信息管理系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 双周周四5~6节 文史212<br></span></td>
+
+							<td class="datagrid" align="center"><span>14 / 0</span></td>
+
+							<td class="datagrid"><span>该课程为大班授课小班讨论形式。选此课必须同时选择信息组织大班课，否则期末成绩以0分记。</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1517&amp;cs_id=BZ2021203033660_52165" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203033660_62809" target="_blank"><span>03033660</span></a></td>
+
+							<td class="datagrid"><span>信息组织小班讨论课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>张鹏翼(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>6</span></td>
+
+							<td class="datagrid"><span>信息管理系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 双周周四5~6节 文史202<br></span></td>
+
+							<td class="datagrid" align="center"><span>16 / 0</span></td>
+
+							<td class="datagrid"><span>远程线上专用 该课程为大班授课小班讨论形式。选此课必须同时选择信息组织大班课，否则期末成绩以0分记。</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1518&amp;cs_id=BZ2021203033660_62809" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202930920_15878" target="_blank"><span>02930920</span></a></td>
+
+							<td class="datagrid"><span>刑事诉讼法</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>陈瑞华(教授),吴洪淇</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>法学院</span></td>
+
+							<td class="datagrid"><span>法学</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 一教101<br>1~15周 每周周五3~4节 一教101<br></span></td>
+
+							<td class="datagrid" align="center"><span>245 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1519&amp;cs_id=BZ2021202930920_15878" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202132492_11599" target="_blank"><span>02132492</span></a></td>
+
+							<td class="datagrid"><span>亚非拉近现代史练习</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>昝涛(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>历史学系</span></td>
+
+							<td class="datagrid"><span>历史学</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 文史208<br></span></td>
+
+							<td class="datagrid" align="center"><span>18 / 0</span></td>
+
+							<td class="datagrid"><span>论文、研讨教室</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1520&amp;cs_id=BZ2021202132492_11599" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021289230072_35608" target="_blank"><span>89230072</span></a></td>
+
+							<td class="datagrid"><span>药剂学实验</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>范田园,张烜,王学清,张华等</span></td>
+
+							<td class="datagrid" align="center"><span>3</span></td>
+
+							<td class="datagrid"><span>医学部教学办</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~17周 每周周四5~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>15 / 0</span></td>
+
+							<td class="datagrid"><span>药学辅修，实验地点药学楼312、313，医学部上课时间从2021.3.8-2021.7.2</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1521&amp;cs_id=BZ2021289230072_35608" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021289230134_22253" target="_blank"><span>89230134</span></a></td>
+
+							<td class="datagrid"><span>药物分析实验</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>1.0</span></td>
+
+							<td class="datagrid" align="center"><span>富戈,何希辉,陈鑫</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>医学部教学办</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~9周 每周周四5~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>15 / 0</span></td>
+
+							<td class="datagrid"><span>药学辅修，实验地点药学楼121、133，医学部上课时间从2021.3.8-2021.7.2</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1522&amp;cs_id=BZ2021289230134_22253" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203536060_13545" target="_blank"><span>03536060</span></a></td>
+
+							<td class="datagrid"><span>印地语语法</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>郭  童(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>印地语</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 一教113<br></span></td>
+
+							<td class="datagrid" align="center"><span>20 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1523&amp;cs_id=BZ2021203536060_13545" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203536240_11887" target="_blank"><span>03536240</span></a></td>
+
+							<td class="datagrid"><span>印度宗教</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>姜景奎(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>印地语</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 理教206<br></span></td>
+
+							<td class="datagrid" align="center"><span>125 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1524&amp;cs_id=BZ2021203536240_11887" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201034640_02232" target="_blank"><span>01034640</span></a></td>
+
+							<td class="datagrid"><span>应用化学基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>褚泰伟(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>化学与分子工程学院</span></td>
+
+							<td class="datagrid"><span>化学类</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 理教209<br></span></td>
+
+							<td class="datagrid" align="center"><span>100 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1525&amp;cs_id=BZ2021201034640_02232" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202533440_15095" target="_blank"><span>02533440</span></a></td>
+
+							<td class="datagrid"><span>营销学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>薛旭(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>经济学院</span></td>
+
+							<td class="datagrid"><span>国际经济与贸易</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 二教412<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1526&amp;cs_id=BZ2021202533440_15095" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202838980_14394" target="_blank"><span>02838980</span></a></td>
+
+							<td class="datagrid"><span>营销研究方法</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>涂平(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>光华管理学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~7节 光华112<br></span></td>
+
+							<td class="datagrid" align="center"><span>46 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1527&amp;cs_id=BZ2021202838980_14394" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203632430_12030" target="_blank"><span>03632430</span></a></td>
+
+							<td class="datagrid"><span>语言学理论与学派</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>李睿(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>德语</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~16周 每周周四5~6节 二教318<br></span></td>
+
+							<td class="datagrid" align="center"><span>20 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1528&amp;cs_id=BZ2021203632430_12030" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202230281_10543" target="_blank"><span>02230281</span></a></td>
+
+							<td class="datagrid"><span>植物考古</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>邓振华(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>考古文博学院</span></td>
+
+							<td class="datagrid"><span>考古学</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 二教408<br></span></td>
+
+							<td class="datagrid" align="center"><span>30 / 0</span></td>
+
+							<td class="datagrid"><span>本研合上。实验课为6-13周，每周4小时，时间自选</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1529&amp;cs_id=BZ2021202230281_10543" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201235210_12202" target="_blank"><span>01235210</span></a></td>
+
+							<td class="datagrid"><span>智能交通系统概论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>张飞舟(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>地球与空间科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 三教404<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1530&amp;cs_id=BZ2021201235210_12202" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203538115_15974" target="_blank"><span>03538115</span></a></td>
+
+							<td class="datagrid"><span>中东研究经典著作导读与学术写作</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>李海鹏(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>阿拉伯语</span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~16周 每周周四5~6节 二教416<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1531&amp;cs_id=BZ2021203538115_15974" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202132460_19907" target="_blank"><span>02132460</span></a></td>
+
+							<td class="datagrid"><span>中国古代史练习</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>党宝海(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>历史学系</span></td>
+
+							<td class="datagrid"><span>历史学</span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 文史103<br></span></td>
+
+							<td class="datagrid" align="center"><span>30 / 0</span></td>
+
+							<td class="datagrid"><span>论文</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1532&amp;cs_id=BZ2021202132460_19907" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202330160_18729" target="_blank"><span>02330160</span></a></td>
+
+							<td class="datagrid"><span>宗教学导论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>吴飞(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>哲学系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四5~6节 二教203<br></span></td>
+
+							<td class="datagrid" align="center"><span>150 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1533&amp;cs_id=BZ2021202330160_18729" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203632130_14344" target="_blank"><span>03632130</span></a></td>
+
+							<td class="datagrid"><span>奥地利、瑞士文学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>Stephanie Godec</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>德语</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 地学205<br></span></td>
+
+							<td class="datagrid" align="center"><span>20 / 0</span></td>
+
+							<td class="datagrid"><span>--补录</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1534&amp;cs_id=BZ2021203632130_14344" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202837180_12442" target="_blank"><span>02837180</span></a></td>
+
+							<td class="datagrid"><span>财务案例分析</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>罗炜(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>光华管理学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~12周 每周周四7~9节 光华114<br></span></td>
+
+							<td class="datagrid" align="center"><span>80 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1535&amp;cs_id=BZ2021202837180_12442" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201532470_12083" target="_blank"><span>01532470</span></a></td>
+
+							<td class="datagrid"><span>城市社会学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>柴彦威(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>城市与环境学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 三教104<br></span></td>
+
+							<td class="datagrid" align="center"><span>60 / 0</span></td>
+
+							<td class="datagrid"><span>城规限</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1536&amp;cs_id=BZ2021201532470_12083" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203230100_10528" target="_blank"><span>03230100</span></a></td>
+
+							<td class="datagrid"><span>当代西方国家政治制度</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>曾渝(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>政府管理学院</span></td>
+
+							<td class="datagrid"><span>政治学与行政学</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 政管515<br></span></td>
+
+							<td class="datagrid" align="center"><span>36 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1537&amp;cs_id=BZ2021203230100_10528" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201833780_19216" target="_blank"><span>01833780</span></a></td>
+
+							<td class="datagrid"><span>当代新闻发展前沿</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>吕艺(教授),程曼丽(教授),陈开和(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>新闻与传播学院</span></td>
+
+							<td class="datagrid"><span>新闻学</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 三教505<br></span></td>
+
+							<td class="datagrid" align="center"><span>90 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1538&amp;cs_id=BZ2021201833780_19216" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202333096_17546" target="_blank"><span>02333096</span></a></td>
+
+							<td class="datagrid"><span>德国古典哲学原著</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>南星(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>哲学系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节<br></span></td>
+
+							<td class="datagrid" align="center"><span>15 / 0</span></td>
+
+							<td class="datagrid"><span>本研合上,，外哲所227</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1539&amp;cs_id=BZ2021202333096_17546" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203632054_14610" target="_blank"><span>03632054</span></a></td>
+
+							<td class="datagrid"><span>德语口译（下）</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>毛明超(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>德语</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 一教104<br></span></td>
+
+							<td class="datagrid" align="center"><span>30 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1540&amp;cs_id=BZ2021203632054_14610" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201235450_16650" target="_blank"><span>01235450</span></a></td>
+
+							<td class="datagrid"><span>地理学基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>田原(副教授),李梅(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>地球与空间科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 理教213<br>1~15周 双周周一1~2节 理教213<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1541&amp;cs_id=BZ2021201235450_16650" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201233591_23574" target="_blank"><span>01233591</span></a></td>
+
+							<td class="datagrid"><span>地球物理学导论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>岳汉(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>地球与空间科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 理教402<br></span></td>
+
+							<td class="datagrid" align="center"><span>100 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1542&amp;cs_id=BZ2021201233591_23574" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203032230_14178" target="_blank"><span>03032230</span></a></td>
+
+							<td class="datagrid"><span>电子商务</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>李胜利(预聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>信息管理系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 三教401<br></span></td>
+
+							<td class="datagrid" align="center"><span>70 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1543&amp;cs_id=BZ2021203032230_14178" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201035180_43194" target="_blank"><span>01035180</span></a></td>
+
+							<td class="datagrid"><span>定量分析化学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>赵美萍(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>4</span></td>
+
+							<td class="datagrid"><span>城市与环境学院</span></td>
+
+							<td class="datagrid"><span>环境科学</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 二教411<br></span></td>
+
+							<td class="datagrid" align="center"><span>120 / 0</span></td>
+
+							<td class="datagrid"><span>地空环工考古工学合上，生态任</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1544&amp;cs_id=BZ2021201035180_43194" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202230310_18338" target="_blank"><span>02230310</span></a></td>
+
+							<td class="datagrid"><span>定量考古学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>陈建立(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>考古文博学院</span></td>
+
+							<td class="datagrid"><span>考古学</span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 一教301<br></span></td>
+
+							<td class="datagrid" align="center"><span>30 / 0</span></td>
+
+							<td class="datagrid"><span>本研合上</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1545&amp;cs_id=BZ2021202230310_18338" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203730852_15533" target="_blank"><span>03730852</span></a></td>
+
+							<td class="datagrid"><span>俄罗斯的信仰与文化（下）</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>王帅(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>俄语</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 一教311<br></span></td>
+
+							<td class="datagrid" align="center"><span>25 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1546&amp;cs_id=BZ2021203730852_15533" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203730382_11042" target="_blank"><span>03730382</span></a></td>
+
+							<td class="datagrid"><span>俄语报刊阅读(二)</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>1.0</span></td>
+
+							<td class="datagrid" align="center"><span>周海燕(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>俄语</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 地学103<br></span></td>
+
+							<td class="datagrid" align="center"><span>20 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1547&amp;cs_id=BZ2021203730382_11042" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203631024_14867" target="_blank"><span>03631024</span></a></td>
+
+							<td class="datagrid"><span>法语视听说（四）</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>1.0</span></td>
+
+							<td class="datagrid" align="center"><span>Alexandra Gaudelet</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>法语</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 一教112<br></span></td>
+
+							<td class="datagrid" align="center"><span>26 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1548&amp;cs_id=BZ2021203631024_14867" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202430331_11285" target="_blank"><span>02430331</span></a></td>
+
+							<td class="datagrid"><span>非洲导论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>刘海方(副教授),许亮(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>国际关系学院</span></td>
+
+							<td class="datagrid"><span>国际政治</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 三教404<br></span></td>
+
+							<td class="datagrid" align="center"><span>55 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1549&amp;cs_id=BZ2021202430331_11285" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200131300_29280" target="_blank"><span>00131300</span></a></td>
+
+							<td class="datagrid"><span>概率论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>章复熹(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>数学科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 理教201<br>1~15周 双周周一1~2节 理教201<br></span></td>
+
+							<td class="datagrid" align="center"><span>150 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1550&amp;cs_id=BZ2021200131300_29280" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200136950_20632" target="_blank"><span>00136950</span></a></td>
+
+							<td class="datagrid"><span>概率统计（B）</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>4.0</span></td>
+
+							<td class="datagrid" align="center"><span>朱晓宝</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>国家发展研究院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 一教201<br></span></td>
+
+							<td class="datagrid" align="center"><span>0 / 0</span></td>
+
+							<td class="datagrid"><span>1班习题课，习题课不算学分，不记成绩，不强制要求上习题课。</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1551&amp;cs_id=BZ2021200136950_20632" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200334030_55069" target="_blank"><span>00334030</span></a></td>
+
+							<td class="datagrid"><span>工学创新实践</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>喻俊志(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>5</span></td>
+
+							<td class="datagrid"><span>工学院</span></td>
+
+							<td class="datagrid"><span>理论与应用力学</span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节<br></span></td>
+
+							<td class="datagrid" align="center"><span>10 / 0</span></td>
+
+							<td class="datagrid"><span>教室在北京大学全球大学生创新创业中心</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1552&amp;cs_id=BZ2021200334030_55069" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200332330_17681" target="_blank"><span>00332330</span></a></td>
+
+							<td class="datagrid"><span>固体力学实验</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>陈建霖(工程师)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>工学院</span></td>
+
+							<td class="datagrid"><span>理论与应用力学</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~16周 每周周四7~9节 三教308<br></span></td>
+
+							<td class="datagrid" align="center"><span>60 / 0</span></td>
+
+							<td class="datagrid"><span>力工，基于实验课特殊性，周四5-6节尽量不要选课。</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1553&amp;cs_id=BZ2021200332330_17681" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203531611_14322" target="_blank"><span>03531611</span></a></td>
+
+							<td class="datagrid"><span>韩国（朝鲜）文学简史（上）</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>文丽华(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>朝鲜语</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 二教506<br></span></td>
+
+							<td class="datagrid" align="center"><span>24 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1554&amp;cs_id=BZ2021203531611_14322" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202030130_19289" target="_blank"><span>02030130</span></a></td>
+
+							<td class="datagrid"><span>汉语音韵学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>赵彤(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>中国语言文学系</span></td>
+
+							<td class="datagrid"><span>中国语言文学类</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 二教306<br></span></td>
+
+							<td class="datagrid" align="center"><span>70 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1555&amp;cs_id=BZ2021202030130_19289" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204130681_19375" target="_blank"><span>04130681</span></a></td>
+
+							<td class="datagrid"><span>航空体育2</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>1.0</span></td>
+
+							<td class="datagrid" align="center"><span>焦晨曦(讲师)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>体育教研部</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>15 / 0</span></td>
+
+							<td class="datagrid"><span>20级空飞班   五四操场</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1556&amp;cs_id=BZ2021204130681_19375" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204130681_24185" target="_blank"><span>04130681</span></a></td>
+
+							<td class="datagrid"><span>航空体育2</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>1.0</span></td>
+
+							<td class="datagrid" align="center"><span>张展嘉(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>体育教研部</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>15 / 0</span></td>
+
+							<td class="datagrid"><span>20级空飞班   五四操场</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1557&amp;cs_id=BZ2021204130681_24185" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021212735230_19812" target="_blank"><span>12735230</span></a></td>
+
+							<td class="datagrid"><span>环境科学与工程前沿</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>倪晋仁(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>环境科学与工程学院</span></td>
+
+							<td class="datagrid"><span>环境科学与工程类</span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 理教310<br></span></td>
+
+							<td class="datagrid" align="center"><span>120 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1558&amp;cs_id=BZ2021212735230_19812" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201531810_16631" target="_blank"><span>01531810</span></a></td>
+
+							<td class="datagrid"><span>环境演变与全球变化</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>周力平(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>城市与环境学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 文史103<br></span></td>
+
+							<td class="datagrid" align="center"><span>30 / 0</span></td>
+
+							<td class="datagrid"><span>生态任，随堂考试</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1559&amp;cs_id=BZ2021201531810_16631" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021206239086_13081" target="_blank"><span>06239086</span></a></td>
+
+							<td class="datagrid"><span>计量经济学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>孙振庭(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>国家发展研究院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 一教103<br>1~15周 单周周二7~8节 一教103<br></span></td>
+
+							<td class="datagrid" align="center"><span>10 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1560&amp;cs_id=BZ2021206239086_13081" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021206239132_31868" target="_blank"><span>06239132</span></a></td>
+
+							<td class="datagrid"><span>计量经济学习题课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>张俊妮(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>3</span></td>
+
+							<td class="datagrid"><span>国家发展研究院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 二教301<br></span></td>
+
+							<td class="datagrid" align="center"><span>150 / 0</span></td>
+
+							<td class="datagrid"><span>3班习题课，习题课不算学分，不记成绩，不强制要求选习题课。</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1561&amp;cs_id=BZ2021206239132_31868" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201630350_16965" target="_blank"><span>01630350</span></a></td>
+
+							<td class="datagrid"><span>教育心理学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>包燕(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>心理与认知科学学院</span></td>
+
+							<td class="datagrid"><span>心理学</span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 三教405<br></span></td>
+
+							<td class="datagrid" align="center"><span>70 / 0</span></td>
+
+							<td class="datagrid"><span>英文</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1562&amp;cs_id=BZ2021201630350_16965" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202535390_12199" target="_blank"><span>02535390</span></a></td>
+
+							<td class="datagrid"><span>金融会计</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>朱南军(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>经济学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 二教408<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1563&amp;cs_id=BZ2021202535390_12199" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200134330_10258" target="_blank"><span>00134330</span></a></td>
+
+							<td class="datagrid"><span>金融经济学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>吴岚(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>数学科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 <br>1~15周 单周周二5~6节<br></span></td>
+
+							<td class="datagrid" align="center"><span>0 / 0</span></td>
+
+							<td class="datagrid"><span>研本</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1564&amp;cs_id=BZ2021200134330_10258" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201233531_17794" target="_blank"><span>01233531</span></a></td>
+
+							<td class="datagrid"><span>空间探测信息处理技术与实验</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>于向前(高级工程师)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>地球与空间科学学院</span></td>
+
+							<td class="datagrid"><span>空间科学与技术</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span>物理北楼415</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1565&amp;cs_id=BZ2021201233531_17794" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201231570_11363" target="_blank"><span>01231570</span></a></td>
+
+							<td class="datagrid"><span>矿物材料学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>传秀云(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>地球与空间科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span>地学楼3424</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1566&amp;cs_id=BZ2021201231570_11363" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203633071_10575" target="_blank"><span>03633071</span></a></td>
+
+							<td class="datagrid"><span>拉丁美洲文学史和文学选读（上）</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>范晔(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>西班牙语</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 文史102<br></span></td>
+
+							<td class="datagrid" align="center"><span>25 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1567&amp;cs_id=BZ2021203633071_10575" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202532730_13818" target="_blank"><span>02532730</span></a></td>
+
+							<td class="datagrid"><span>劳动经济学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>石菊(长聘副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>经济学院</span></td>
+
+							<td class="datagrid"><span>经济学</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 理教404<br></span></td>
+
+							<td class="datagrid" align="center"><span>30 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1568&amp;cs_id=BZ2021202532730_13818" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202030150_13915" target="_blank"><span>02030150</span></a></td>
+
+							<td class="datagrid"><span>理论语言学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>陈保亚(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>中国语言文学系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 一教208<br></span></td>
+
+							<td class="datagrid" align="center"><span>40 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1569&amp;cs_id=BZ2021202030150_13915" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202431781_14518" target="_blank"><span>02431781</span></a></td>
+
+							<td class="datagrid"><span>美国与东亚关系</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>张小明(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>国际关系学院</span></td>
+
+							<td class="datagrid"><span>国际政治</span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 国关C210<br></span></td>
+
+							<td class="datagrid" align="center"><span>55 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1570&amp;cs_id=BZ2021202431781_14518" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202432150_14970" target="_blank"><span>02432150</span></a></td>
+
+							<td class="datagrid"><span>美国政治与公共政策</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>雷少华(教学副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>国际关系学院</span></td>
+
+							<td class="datagrid"><span>国际政治</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 国关C109<br></span></td>
+
+							<td class="datagrid" align="center"><span>55 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1571&amp;cs_id=BZ2021202432150_14970" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204334017_11148" target="_blank"><span>04334017</span></a></td>
+
+							<td class="datagrid"><span>美索不达米亚艺术与文明</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>贾妍(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>艺术学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~16周 每周周四7~8节 三教201<br></span></td>
+
+							<td class="datagrid" align="center"><span>80 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1572&amp;cs_id=BZ2021204334017_11148" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203534290_13644" target="_blank"><span>03534290</span></a></td>
+
+							<td class="datagrid"><span>缅甸国情及热点问题研究</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>杨国影(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>缅甸语</span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 地学316<br></span></td>
+
+							<td class="datagrid" align="center"><span>10 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1573&amp;cs_id=BZ2021203534290_13644" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202331221_10865" target="_blank"><span>02331221</span></a></td>
+
+							<td class="datagrid"><span>模型论</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>钟盛阳(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>哲学系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节<br></span></td>
+
+							<td class="datagrid" align="center"><span>15 / 0</span></td>
+
+							<td class="datagrid"><span>本研合上  二教318</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1574&amp;cs_id=BZ2021202331221_10865" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203635092_18185" target="_blank"><span>03635092</span></a></td>
+
+							<td class="datagrid"><span>葡萄牙文学史和文学选读（二）</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>闵雪飞(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>外国语学院</span></td>
+
+							<td class="datagrid"><span>葡萄牙语</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 地学304<br></span></td>
+
+							<td class="datagrid" align="center"><span>20 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1575&amp;cs_id=BZ2021203635092_18185" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201231791_14111" target="_blank"><span>01231791</span></a></td>
+
+							<td class="datagrid"><span>普通地质学讨论班</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>张志诚(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>地球与空间科学学院</span></td>
+
+							<td class="datagrid"><span>地质学</span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 双周周四7~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>20 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1576&amp;cs_id=BZ2021201231791_14111" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201231791_20139" target="_blank"><span>01231791</span></a></td>
+
+							<td class="datagrid"><span>普通地质学讨论班</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>黄宝春(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>地球与空间科学学院</span></td>
+
+							<td class="datagrid"><span>地质学</span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 双周周四7~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>20 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1577&amp;cs_id=BZ2021201231791_20139" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201231791_37788" target="_blank"><span>01231791</span></a></td>
+
+							<td class="datagrid"><span>普通地质学讨论班</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>朱永峰(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>3</span></td>
+
+							<td class="datagrid"><span>地球与空间科学学院</span></td>
+
+							<td class="datagrid"><span>地质学</span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 双周周四7~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>20 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1578&amp;cs_id=BZ2021201231791_37788" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200431680_15339" target="_blank"><span>00431680</span></a></td>
+
+							<td class="datagrid"><span>普通物理习题课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>刘树新(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>5</span></td>
+
+							<td class="datagrid"><span>数学科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 三教205<br></span></td>
+
+							<td class="datagrid" align="center"><span>77 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1579&amp;cs_id=BZ2021200431680_15339" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200431680_29157" target="_blank"><span>00431680</span></a></td>
+
+							<td class="datagrid"><span>普通物理习题课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>刘树新(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>6</span></td>
+
+							<td class="datagrid"><span>数学科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 三教507<br></span></td>
+
+							<td class="datagrid" align="center"><span>77 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1580&amp;cs_id=BZ2021200431680_29157" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021200431680_39236" target="_blank"><span>00431680</span></a></td>
+
+							<td class="datagrid"><span>普通物理习题课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>刘树新(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>7</span></td>
+
+							<td class="datagrid"><span>数学科学学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 二教422<br></span></td>
+
+							<td class="datagrid" align="center"><span>76 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1581&amp;cs_id=BZ2021200431680_39236" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021212635280_12681" target="_blank"><span>12635280</span></a></td>
+
+							<td class="datagrid"><span>区域分析与区域规划</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>赵鹏军(教授),冯长春(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>城市与环境学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 三教208<br></span></td>
+
+							<td class="datagrid" align="center"><span>60 / 0</span></td>
+
+							<td class="datagrid"><span>人文合。</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1582&amp;cs_id=BZ2021212635280_12681" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204834041_17783" target="_blank"><span>04834041</span></a></td>
+
+							<td class="datagrid"><span>人工智能引论实践课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>罗定生(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>信息科学技术学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 三教503<br></span></td>
+
+							<td class="datagrid" align="center"><span>65 / 0</span></td>
+
+							<td class="datagrid"><span>Intelligent Robotics</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1583&amp;cs_id=BZ2021204834041_17783" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204834041_20598" target="_blank"><span>04834041</span></a></td>
+
+							<td class="datagrid"><span>人工智能引论实践课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>李文新(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>2</span></td>
+
+							<td class="datagrid"><span>信息科学技术学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 二教402<br></span></td>
+
+							<td class="datagrid" align="center"><span>65 / 0</span></td>
+
+							<td class="datagrid"><span>AI Game Playing</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1584&amp;cs_id=BZ2021204834041_20598" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204834041_35092" target="_blank"><span>04834041</span></a></td>
+
+							<td class="datagrid"><span>人工智能引论实践课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>童云海(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>3</span></td>
+
+							<td class="datagrid"><span>信息科学技术学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 一教302<br></span></td>
+
+							<td class="datagrid" align="center"><span>65 / 0</span></td>
+
+							<td class="datagrid"><span>Data Intelligence</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1585&amp;cs_id=BZ2021204834041_35092" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204834041_53041" target="_blank"><span>04834041</span></a></td>
+
+							<td class="datagrid"><span>人工智能引论实践课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>刘家瑛(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>5</span></td>
+
+							<td class="datagrid"><span>信息科学技术学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 二教211<br></span></td>
+
+							<td class="datagrid" align="center"><span>60 / 0</span></td>
+
+							<td class="datagrid"><span>Computer Vision</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1586&amp;cs_id=BZ2021204834041_53041" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204834041_61321" target="_blank"><span>04834041</span></a></td>
+
+							<td class="datagrid"><span>人工智能引论实践课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>陈婧(研究员)</span></td>
+
+							<td class="datagrid" align="center"><span>6</span></td>
+
+							<td class="datagrid"><span>信息科学技术学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 二教316<br></span></td>
+
+							<td class="datagrid" align="center"><span>65 / 0</span></td>
+
+							<td class="datagrid"><span>Speech and Hearing</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1587&amp;cs_id=BZ2021204834041_61321" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204834041_76133" target="_blank"><span>04834041</span></a></td>
+
+							<td class="datagrid"><span>人工智能引论实践课</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>0.0</span></td>
+
+							<td class="datagrid" align="center"><span>王奕森(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>7</span></td>
+
+							<td class="datagrid"><span>信息科学技术学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>20</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 理教301<br></span></td>
+
+							<td class="datagrid" align="center"><span>65 / 0</span></td>
+
+							<td class="datagrid"><span>Trustworthy Machine Learning</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1588&amp;cs_id=BZ2021204834041_76133" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202302723_10065" target="_blank"><span>02302723</span></a></td>
+
+							<td class="datagrid"><span>人工智能哲学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>GREVESEBASTIAN(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>哲学系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节<br></span></td>
+
+							<td class="datagrid" align="center"><span>15 / 0</span></td>
+
+							<td class="datagrid"><span>外哲类  本研合上  理教317</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1589&amp;cs_id=BZ2021202302723_10065" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203231160_13525" target="_blank"><span>03231160</span></a></td>
+
+							<td class="datagrid"><span>人力资源开发与管理</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>句华(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>政府管理学院</span></td>
+
+							<td class="datagrid"><span>行政管理学</span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 政管506<br></span></td>
+
+							<td class="datagrid" align="center"><span>70 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1590&amp;cs_id=BZ2021203231160_13525" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204834360_17143" target="_blank"><span>04834360</span></a></td>
+
+							<td class="datagrid"><span>认知科学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>查红彬(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>信息科学技术学院</span></td>
+
+							<td class="datagrid"><span>智能科学与技术</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 一教102<br></span></td>
+
+							<td class="datagrid" align="center"><span>80 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1591&amp;cs_id=BZ2021204834360_17143" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ20212E2800080_12647" target="_blank"><span>E2800080</span></a></td>
+
+							<td class="datagrid"><span>商务中文B</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>吴逾倩</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>光华管理学院</span></td>
+
+							<td class="datagrid"><span>工商管理</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节<br></span></td>
+
+							<td class="datagrid" align="center"><span>16 / 0</span></td>
+
+							<td class="datagrid"><span>线上授课，仅限书院国际生和交换生选课</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1592&amp;cs_id=BZ20212E2800080_12647" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202432161_15818" target="_blank"><span>02432161</span></a></td>
+
+							<td class="datagrid"><span>社会科学定量方法</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>罗杭(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>国际关系学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 三教403<br></span></td>
+
+							<td class="datagrid" align="center"><span>80 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1593&amp;cs_id=BZ2021202432161_15818" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021203130480_18847" target="_blank"><span>03130480</span></a></td>
+
+							<td class="datagrid"><span>社会行政</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>邓锁(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>社会学系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 理教216<br></span></td>
+
+							<td class="datagrid" align="center"><span>30 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1594&amp;cs_id=BZ2021203130480_18847" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201533220_10156" target="_blank"><span>01533220</span></a></td>
+
+							<td class="datagrid"><span>社会综合实践调查</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>汪芳(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>城市与环境学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>17</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节<br></span></td>
+
+							<td class="datagrid" align="center"><span>50 / 0</span></td>
+
+							<td class="datagrid"><span>专业教室3456</span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1595&amp;cs_id=BZ2021201533220_10156" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021201131110_19765" target="_blank"><span>01131110</span></a></td>
+
+							<td class="datagrid"><span>生物技术制药基础</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>秦跟基(教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>生命科学学院</span></td>
+
+							<td class="datagrid"><span>生物技术</span></td>
+
+							<td class="datagrid" align="center"><span> </span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 理教417<br></span></td>
+
+							<td class="datagrid" align="center"><span>40 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1596&amp;cs_id=BZ2021201131110_19765" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021204830100_13484" target="_blank"><span>04830100</span></a></td>
+
+							<td class="datagrid"><span>数字逻辑设计</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>佟冬(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>信息科学技术学院</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>19</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 二教107<br></span></td>
+
+							<td class="datagrid" align="center"><span>160 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1597&amp;cs_id=BZ2021204830100_13484" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-even">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202132650_18836" target="_blank"><span>02132650</span></a></td>
+
+							<td class="datagrid"><span>苏联史专题</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>2.0</span></td>
+
+							<td class="datagrid" align="center"><span>庄宇(助理教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>历史学系</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~8节 二教206<br></span></td>
+
+							<td class="datagrid" align="center"><span>60 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1598&amp;cs_id=BZ2021202132650_18836" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+<tr class="datagrid-odd">
+							<td class="datagrid" align="center"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/goNested.do?course_seq_no=BZ2021202532180_10722" target="_blank"><span>02532180</span></a></td>
+
+							<td class="datagrid"><span>投资银行学</span></td>
+
+							
+								
+								
+								
+									<td class="datagrid" align="center" colspan="2"><span>任选</span></td>
+
+								
+							
+
+							<td class="datagrid" align="center"><span>3.0</span></td>
+
+							<td class="datagrid" align="center"><span>冯科(副教授)</span></td>
+
+							<td class="datagrid" align="center"><span>1</span></td>
+
+							<td class="datagrid"><span>经济学院</span></td>
+
+							<td class="datagrid"><span>金融学</span></td>
+
+							<td class="datagrid" align="center"><span>18</span></td>
+
+							<td class="datagrid"><span>1~15周 每周周四7~9节 理教306<br></span></td>
+
+							<td class="datagrid" align="center"><span>120 / 0</span></td>
+
+							<td class="datagrid"><span></span></td>
+
+
+							
+								
+								
+									
+									
+									
+										
+										
+											<td class="datagrid" align="center" style="width:90"><a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/addToPlan.do?index=1599&amp;cs_id=BZ2021202532180_10722" onclick="return warning();"><span> 加入选课计划</span></a></td>
+
+										
+									
+								
+							
+						
+</tr>
+						
+						
+					
+						
+						
+
+
+						
+						
+<tr class="datagrid-footer">
+							<tr>
+								<td colspan="14" align="right">每页100条 Page 16 of 20&nbsp;&nbsp;<a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/queryCurriculum.jsp?netui_pagesize=syllabusListGrid%3B100">First</a>&nbsp;/&nbsp;<a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/queryCurriculum.jsp?netui_pagesize=syllabusListGrid%3B100&amp;netui_row=syllabusListGrid%3B1400">Previous</a>&nbsp;&nbsp;&nbsp;<a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/queryCurriculum.jsp?netui_pagesize=syllabusListGrid%3B100&amp;netui_row=syllabusListGrid%3B1600">Next</a>&nbsp;/&nbsp;<a href="/elective2008/edu/pku/stu/elective/controller/courseQuery/queryCurriculum.jsp?netui_pagesize=syllabusListGrid%3B100&amp;netui_row=syllabusListGrid%3B1900">Last</a>&nbsp;&nbsp; 
+									<form name="pageForm" action="queryCurriculum.jsp" style="margin:0px; display:inline">跳转到: <script
+										type="text/javascript">
+				                    function doPagerSubmit(comp)
+				                    {
+				                      var form = document.forms["pageForm"];
+				                      form.method="GET";
+				                      form.submit();
+				                    }
+		                		</script> <select name="netui_row"
+										onchange="doPagerSubmit(this);return true;">
+										
+											
+												
+												
+													<option value="syllabusListGrid;0">1</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;100">2</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;200">3</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;300">4</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;400">5</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;500">6</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;600">7</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;700">8</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;800">9</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;900">10</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;1000">11</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;1100">12</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;1200">13</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;1300">14</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;1400">15</option>
+												
+											
+										
+											
+												
+													<option value="syllabusListGrid;1500" selected="true">16</option>
+												
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;1600">17</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;1700">18</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;1800">19</option>
+												
+											
+										
+											
+												
+												
+													<option value="syllabusListGrid;1900">20</option>
+												
+											
+										
+									</select>
+								</td>
+
+							</tr>
+						
+</tr>
+						
+					</table>
+
+</td>
+				</tr>
+			</table>
+		
+
+
+		
+	
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_tagIdNameMap table to map the tagId attributes
+// to the real name written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.gym="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.education_plan_bk="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.courseName="{actionForm.courseName}"
+netui_tagIdNameMap.qyForm="qyForm"
+netui_tagIdNameMap.speciality="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.trans_choice="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.english="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.pub_choice="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.courseID="{actionForm.courseID}"
+netui_tagIdNameMap.courseDay="wlw-select_key:{actionForm.courseDay}"
+netui_tagIdNameMap.deptID="wlw-select_key:{actionForm.deptID}"
+netui_tagIdNameMap.politics="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.liberal_computer="wlw-radio_button_group_key:{actionForm.courseSettingType}"
+netui_tagIdNameMap.courseTime="wlw-select_key:{actionForm.courseTime}"
+
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script></body>
+
+</html>
+<script language="JavaScript1.1" src="/elective2008/resources/js/ele.js"></script>
+<script language="JavaScript1.1" src="/elective2008/resources/js/courseQuery.js"></script>
+<script language="JavaScript1.1"><!--
+
+$('#deptID').selectize({
+	create: false,
+	sortField: {
+		field: 'value',
+		direction: 'asc'
+	}
+});
+$('#courseDay').selectize({
+	create: false,
+	sortField: {
+		field: 'value',
+		direction: 'asc'
+	}
+});
+$('#courseTime').selectize({
+	create: false,
+	sortField: {
+		field: 'text',
+		direction: 'asc'
+	}
+});
+
+var chgConExpDep=function(){
+    	$("#courseID").val('');
+    	$("#courseName").val('');
+    	$("#courseTime")[0].selectize.setValue('');
+    	$("#courseDay")[0].selectize.setValue('');
+	}
+$('#b_cancel').on('click',function(){
+		chgConExpDep();
+	})
+	
+if(true){
+	$('#b_query').on('click',function(){
+		if($('input:radio:checked').val()==null)alert("必须选择一项课程分类");
+		else $('#qyForm').submit();
+	})
+     
+	$('#education_plan_bk').on('click',function(){
+		$("#deptID")[0].selectize.setValue("048");
+		$('#deptID')[0].selectize.lock();
+	})
+	$('#speciality').on('click',function(){
+	    if(true && true){
+	   		 $('#deptID')[0].selectize.unlock();
+	    }else{
+			if(!false){//除元培学院学生之外，其他学生都只能查询、查看本院系课程
+			   if('080701'=='060131' ||'080701'=='060132'){
+				$('#deptID')[0].selectize.clearOptions();
+				$('#deptID')[0].selectize.addOption(new Option("外国语学院","039"));
+				$('#deptID')[0].selectize.addOption(new Option("历史学系","021"));
+				$("#deptID")[0].selectize.setValue("048");
+	   			$('#deptID')[0].selectize.unlock();
+			  }else{
+				$("#deptID")[0].selectize.setValue("048");
+	   			$('#deptID')[0].selectize.lock();
+			  }
+			}else{
+			 	if($('#deptID').val()=='')$("#deptID")[0].selectize.setValue("048");
+	   			$('#deptID')[0].selectize.unlock();
+			}
+		}
+	})
+	$('#politics,#english,#gym,#liberal_computer,#pt').on('click',function(){
+	   	$("#deptID")[0].selectize.setValue('');
+	   	$('#deptID')[0].selectize.lock();
+	})
+	$('#trans_choice,#pub_choice').on('click',function(){
+		if(false){
+			$("#deptID")[0].selectize.setValue("048");
+			$('#deptID')[0].selectize.lock();
+		}else{
+			if($('#deptID').val()=='')$("#deptID")[0].selectize.setValue("048");
+		   	$('#deptID')[0].selectize.unlock();
+	   	}
+	})
+	$('input:radio').on('change',function(){
+		chgConExpDep();
+	})
+	if(false){
+		$('#speciality').click();
+	}
+	if($('input:radio:checked').val()!=null){
+		$('input:radio:checked').click();
+
+	}
+	
+}
+
+--></script>

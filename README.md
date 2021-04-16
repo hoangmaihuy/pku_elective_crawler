@@ -1,1 +1,1 @@
-# pku_elective_crawler
+# PKU Elective Crawler
