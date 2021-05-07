@@ -2,7 +2,7 @@ import os
 from bs4 import BeautifulSoup
 import simplejson as json
 
-courses_dir = 'courses'
+courses_dir = 'courses_html'
 
 def parse_course(course_type, cols):
     course = {}
@@ -20,7 +20,7 @@ def parse_course(course_type, cols):
             'id':  cols[0].span.text,
             'name': cols[1].span.text,
             'level': cols[2].span.text,
-            'credits' : int(float(cols[4].span.text)),
+            'credit' : int(float(cols[4].span.text)),
             'teachers': cols[5].span.text.split(','),
             'school': cols[7].span.text,
             'profession': cols[8].span.text,
@@ -30,7 +30,7 @@ def parse_course(course_type, cols):
             'id':  cols[0].span.text,
             'name': cols[1].span.text,
             'type': cols[2].span.text,
-            'credits' : int(float(cols[4].span.text)),
+            'credit' : int(float(cols[4].span.text)),
             'teachers': cols[5].span.text.split(','),
             'school': cols[7].span.text,
             'profession': cols[8].span.text,

@@ -1,1 +1,345 @@
-[{"id": "03835202", "name": "大学英语ABC (二) (2)", "level": "", "credits": 2, "teachers": ["外教（英语）"], "school": "英语语言文学系", "profession": ""}, {"id": "03835201", "name": "大学英语ABC (一) (2)", "level": "", "credits": 2, "teachers": ["外教（英语）"], "school": "英语语言文学系", "profession": ""}, {"id": "03835950", "name": "高级英语口语(B级)", "level": "B", "credits": 2, "teachers": ["Randol Francis", "马小琦(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835900", "name": "高级英语写作(B级)", "level": "B", "credits": 2, "teachers": ["Janet Steele", "Amy Francis", "马小琦(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835760", "name": "高级英语阅读(B级)", "level": "B", "credits": 2, "teachers": ["苏勇(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835974", "name": "基础英语听力(A级)", "level": "A", "credits": 2, "teachers": ["", "于龙珠(讲师)", "钱清(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835992", "name": "美国政治制度(C级)", "level": "C", "credits": 2, "teachers": ["Todd Forsyth", "马小琦(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835230", "name": "实用英语词汇学(B级)", "level": "B", "credits": 2, "teachers": ["张华(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835995", "name": "学术英语阅读(C级)", "level": "C", "credits": 2, "teachers": ["柯彦玢(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835880", "name": "英美报刊选读(B级)", "level": "B", "credits": 2, "teachers": ["许娅(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835460", "name": "英美戏剧和电影(B级)", "level": "B", "credits": 2, "teachers": ["张红波(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835552", "name": "英语听说(A级)", "level": "A", "credits": 2, "teachers": ["闻钧(讲师)", "刘红中(副教授)", "陈冰(教学副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835543", "name": "英语阅读(A级)", "level": "A", "credits": 2, "teachers": ["李淑静(副教授)", "马小琦(讲师)", "张敏(讲师)", "沙筱薇(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835551", "name": "高级英语听说(B级)", "level": "B", "credits": 2, "teachers": ["冯利(副教授)", "吴芊(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835890", "name": "汉英翻译理论与实践(B级)", "level": "B", "credits": 2, "teachers": ["余苏凌(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835390", "name": "文艺复兴艺术作品与圣经故事(B级)", "level": "B", "credits": 2, "teachers": ["刘小侠(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835544", "name": "学术英语写作(C级)", "level": "C", "credits": 2, "teachers": ["王雷(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835987", "name": "英美短篇小说文本分析与鉴赏(C级)", "level": "C", "credits": 2, "teachers": ["茆卫彤(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835710", "name": "语言、文化与交际(C级)", "level": "C", "credits": 2, "teachers": ["郑萱(助理教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835972", "name": "实用英语：从听说到演讲(C级)", "level": "C", "credits": 2, "teachers": ["王雷(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835530", "name": "美国重要历史文献选读(C级)", "level": "C", "credits": 2, "teachers": ["张雁(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835780", "name": "批判性思维与学术写作(C+级)", "level": "C+", "credits": 2, "teachers": ["冯硕(助理教授)", "罗正鹏(助理教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835770", "name": "商务沟通与表达(C级)", "level": "C", "credits": 2, "teachers": ["Brigg Steele", "马小琦(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835800", "name": "实用基础英语写作(A级)", "level": "A", "credits": 2, "teachers": ["董欣(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835830", "name": "西方文化选读(C级)", "level": "C", "credits": 2, "teachers": ["刘瑾(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835971", "name": "英国现代诗歌(C级)", "level": "C", "credits": 2, "teachers": ["梅申友(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835986", "name": "英语散文选读：19世纪维多利亚时期至20世纪(C级)", "level": "C", "credits": 2, "teachers": ["马乃强(教学副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835660", "name": "影视中的英美文化(B级)", "level": "B", "credits": 2, "teachers": ["宋海波(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835650", "name": "北京和上海: 中国历史上的双城记(C级)", "level": "C", "credits": 2, "teachers": ["高艳丽(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835100", "name": "西方人文英语(C级)", "level": "C", "credits": 2, "teachers": ["胡旭辉(长聘副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835790", "name": "英美戏剧概况(B级)", "level": "B", "credits": 2, "teachers": ["Joe Graves", "马小琦(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835680", "name": "当代英美纪录片中的中国文化和社会(B级)", "level": "B", "credits": 2, "teachers": ["闻钧(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835110", "name": "科技前沿英语(C级)", "level": "C", "credits": 2, "teachers": ["田剪秋(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835270", "name": "英语词汇与英美文化(B级)", "level": "B", "credits": 2, "teachers": ["王静文(讲师)", "高彦梅(长聘副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835260", "name": "英语名著与电影(B级)", "level": "B", "credits": 2, "teachers": ["于莹(副教授)", "钱清(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835985", "name": "英语散文选读：16世纪至19世纪浪漫主义时期(C级)", "level": "C", "credits": 2, "teachers": ["徐溯(讲师)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835984", "name": "英语创意表达-TED演讲视听说(B级)", "level": "B", "credits": 2, "teachers": ["李莉春(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835670", "name": "英语非虚构作品中的近当代中国社会与文化(C级)", "level": "C", "credits": 2, "teachers": ["陈冰(教学副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835994", "name": "经典英美诗歌翻译与鉴赏(C级)", "level": "C", "credits": 2, "teachers": ["卢炜(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835988", "name": "文化人类学概论(C级)", "level": "C", "credits": 2, "teachers": ["李淑静(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835130", "name": "学术英语听说(C级)", "level": "C", "credits": 2, "teachers": ["刘红中(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835970", "name": "语调与听说语法(A级)", "level": "A", "credits": 2, "teachers": ["梁波(副教授)"], "school": "英语语言文学系", "profession": ""}, {"id": "03835750", "name": "英汉名作名译研读(C级)", "level": "C", "credits": 2, "teachers": ["余苏凌(副教授)"], "school": "英语语言文学系", "profession": ""}]
+[{
+    "id": "03835202",
+    "name": "大学英语ABC (二) (2)",
+    "level": "",
+    "credit": 2,
+    "teachers": ["外教（英语）"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835201",
+    "name": "大学英语ABC (一) (2)",
+    "level": "",
+    "credit": 2,
+    "teachers": ["外教（英语）"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835950",
+    "name": "高级英语口语(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["Randol Francis", "马小琦(讲师)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835900",
+    "name": "高级英语写作(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["马小琦(讲师)", "Janet Steele", "Amy Francis"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835760",
+    "name": "高级英语阅读(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["苏勇(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835974",
+    "name": "基础英语听力(A级)",
+    "level": "A",
+    "credit": 2,
+    "teachers": ["", "钱清(副教授)", "于龙珠(讲师)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835992",
+    "name": "美国政治制度(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["马小琦(讲师)", "Todd Forsyth"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835230",
+    "name": "实用英语词汇学(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["张华(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835995",
+    "name": "学术英语阅读(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["柯彦玢(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835880",
+    "name": "英美报刊选读(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["许娅(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835460",
+    "name": "英美戏剧和电影(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["张红波(讲师)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835552",
+    "name": "英语听说(A级)",
+    "level": "A",
+    "credit": 2,
+    "teachers": ["刘红中(副教授)", "陈冰(教学副教授)", "闻钧(讲师)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835543",
+    "name": "英语阅读(A级)",
+    "level": "A",
+    "credit": 2,
+    "teachers": ["马小琦(讲师)", "张敏(讲师)", "沙筱薇(讲师)", "李淑静(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835551",
+    "name": "高级英语听说(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["吴芊(讲师)", "冯利(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835890",
+    "name": "汉英翻译理论与实践(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["余苏凌(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835390",
+    "name": "文艺复兴艺术作品与圣经故事(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["刘小侠(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835544",
+    "name": "学术英语写作(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["王雷(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835987",
+    "name": "英美短篇小说文本分析与鉴赏(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["茆卫彤(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835710",
+    "name": "语言、文化与交际(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["郑萱(助理教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835972",
+    "name": "实用英语：从听说到演讲(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["王雷(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835530",
+    "name": "美国重要历史文献选读(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["张雁(讲师)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835780",
+    "name": "批判性思维与学术写作(C+级)",
+    "level": "C+",
+    "credit": 2,
+    "teachers": ["冯硕(助理教授)", "罗正鹏(助理教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835770",
+    "name": "商务沟通与表达(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["马小琦(讲师)", "Brigg Steele"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835800",
+    "name": "实用基础英语写作(A级)",
+    "level": "A",
+    "credit": 2,
+    "teachers": ["董欣(讲师)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835830",
+    "name": "西方文化选读(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["刘瑾(讲师)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835971",
+    "name": "英国现代诗歌(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["梅申友(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835986",
+    "name": "英语散文选读：19世纪维多利亚时期至20世纪(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["马乃强(教学副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835660",
+    "name": "影视中的英美文化(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["宋海波(讲师)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835650",
+    "name": "北京和上海: 中国历史上的双城记(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["高艳丽(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835100",
+    "name": "西方人文英语(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["胡旭辉(长聘副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835790",
+    "name": "英美戏剧概况(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["马小琦(讲师)", "Joe Graves"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835680",
+    "name": "当代英美纪录片中的中国文化和社会(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["闻钧(讲师)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835110",
+    "name": "科技前沿英语(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["田剪秋(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835270",
+    "name": "英语词汇与英美文化(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["高彦梅(长聘副教授)", "王静文(讲师)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835260",
+    "name": "英语名著与电影(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["钱清(副教授)", "于莹(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835985",
+    "name": "英语散文选读：16世纪至19世纪浪漫主义时期(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["徐溯(讲师)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835984",
+    "name": "英语创意表达-TED演讲视听说(B级)",
+    "level": "B",
+    "credit": 2,
+    "teachers": ["李莉春(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835670",
+    "name": "英语非虚构作品中的近当代中国社会与文化(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["陈冰(教学副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835994",
+    "name": "经典英美诗歌翻译与鉴赏(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["卢炜(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835988",
+    "name": "文化人类学概论(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["李淑静(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835130",
+    "name": "学术英语听说(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["刘红中(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835970",
+    "name": "语调与听说语法(A级)",
+    "level": "A",
+    "credit": 2,
+    "teachers": ["梁波(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}, {
+    "id": "03835750",
+    "name": "英汉名作名译研读(C级)",
+    "level": "C",
+    "credit": 2,
+    "teachers": ["余苏凌(副教授)"],
+    "school": "英语语言文学系",
+    "profession": ""
+}]
