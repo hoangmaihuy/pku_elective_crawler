@@ -1,10 +1,7 @@
 import requests
 import time
 import os
-import random
 
-
-course_types = ['speciality']
 
 get_courses_url = 'https://elective.pku.edu.cn/elective2008/edu/pku/stu/elective/controller/courseQuery/getCurriculmByForm.do'
 query_courses_url = 'https://elective.pku.edu.cn/elective2008/edu/pku/stu/elective/controller/courseQuery/queryCurriculum.jsp'
@@ -38,7 +35,7 @@ def get_courses(course_type, page_nums):
 		'wlw-select_key:{actionForm.courseTime}': '',
 		'wlw-checkbox_key:{actionForm.queryDateFlag}OldValue': 'false',
 		'deptIdHide': 'ALL',
-		}
+	}
 
 	for page_num in range(1, page_nums+1):
 		if page_num == 1:
@@ -50,7 +47,7 @@ def get_courses(course_type, page_nums):
 		if r.status_code != 200:
 			print("get_courses_error|status_code={},course_type={},page={}".format(r.status_code, course_type, page_num))
 			return
-		dir_name = os.path.join('courses', course_type)
+		dir_name = os.path.join('courses_html', course_type)
 		if not os.path.exists(dir_name):
 			os.mkdir(dir_name)
 		with open(os.path.join(dir_name, "{}.html".format(page_num)), "w", encoding="utf8") as f:
