@@ -4,7 +4,7 @@
 >
 > 学号：1800094810
 >
-> 日期：2021/05/07
+> 日期：2021/05/15
 
 - [北大选课网爬虫](#北大选课网爬虫)
   - [1. 爬虫选课页面 - crawler.py](#1-爬虫选课页面---crawlerpy)
@@ -118,3 +118,8 @@ PRIMARY KEY (id)
   ```
 
 实现过程中使用 `MySQLdb` 的 `cursor()`，然后用 `execute()`, `fetchone()` 和 `fetchall()` 函数执行查询语句。 
+
+**运行结果**
+
+![analyze_result.png](./analyze_result.png)
+

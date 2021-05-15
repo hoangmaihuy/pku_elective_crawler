@@ -5,7 +5,7 @@ MYSQL_PASSWORD = ""
 ELECTIVE_DB = "elective_db"
 
 def get_total_course(c):
-    SQL = "SELECT COUNT(*) FROM course_tab;"   
+    SQL = "SELECT COUNT(*) FROM course_tab;"
     try:
         c.execute(SQL)
         r = c.fetchone()
@@ -18,7 +18,7 @@ def get_max_credit_course(c):
     SQL = "SELECT name, credit, school_name FROM course_tab ORDER BY credit DESC LIMIT 1;"
     try:
         c.execute(SQL)
-        r = c.fetchone() 
+        r = c.fetchone()
         return {
             "name": r[0],
             "credit": r[1],
